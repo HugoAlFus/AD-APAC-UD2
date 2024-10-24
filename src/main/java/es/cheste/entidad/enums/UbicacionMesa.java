@@ -1,6 +1,6 @@
 package es.cheste.entidad.enums;
 
-public enum Ubicacion {
+public enum UbicacionMesa {
 
     TERRAZA,
     SALON_PRINCIPAL,

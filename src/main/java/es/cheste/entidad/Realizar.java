@@ -11,5 +11,5 @@ public class Realizar {
 
     private int idPlato;
     private int idChef;
-    private Date date;
+    private Date fecha;
 }

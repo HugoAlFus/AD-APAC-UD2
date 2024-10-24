@@ -8,6 +8,8 @@ public enum EspecialidadChef {
     COMIDA_ITALIANA,
     PESCADO,
     MARISCO,
-    PANADERIA
+    PANADERIA,
+    VEGETARIANA,
+    VEGANA
 
 }
