@@ -1,5 +1,6 @@
 package es.cheste.entidad;
 
+import es.cheste.entidad.enums.EstadoPedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,5 +15,6 @@ public class Pedido {
     private double precioTotal;
     private int idCliente;
     private int idMesa;
+    private EstadoPedido estadoPedido;
 
 }

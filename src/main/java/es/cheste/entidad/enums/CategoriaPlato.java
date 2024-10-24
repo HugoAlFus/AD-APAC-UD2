@@ -2,7 +2,9 @@ package es.cheste.entidad.enums;
 
 public enum CategoriaPlato {
 
-    ENTRADA,
+    ENTRANTE,
     PLATO_FUERTE,
-    POSTRE
+    POSTRE,
+    ENSALDA,
+    SOPA
 }
