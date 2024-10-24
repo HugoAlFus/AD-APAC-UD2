@@ -38,13 +38,21 @@ public class GestorBD {
 
         try {
             if (!comprobarExistenTablas(connection)) {
+                connection.setAutoCommit(Boolean.FALSE);
                 ejecutarSentenciasSQL(RUTA_SQL_CREACION, connection, DELIMITADORES[0]);
                 ejecutarSentenciasSQL(RUTA_SQL_INSERCION, connection, DELIMITADORES[0]);
+                connection.commit();
                 ejecutarSentenciasSQL(RUTA_SQL_TRIGGER, connection, DELIMITADORES[1]);
                 esValida = Boolean.TRUE;
             } else LOGGER.info("Las tablas ya existen");
         } catch (SQLException e) {
             LOGGER.error("Error al iniciar la base de datos: {}", e.getMessage());
+            try {
+                LOGGER.error("Se esta haciendo rollback");
+                connection.rollback();
+            } catch (SQLException ex) {
+                LOGGER.error("Hubo un error al hacer rollback {}", e.getMessage());
+            }
         } finally {
             conexion.desconectar();
         }

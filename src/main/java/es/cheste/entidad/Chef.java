@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Chef {
 
-    private int id_Chef;
+    private int idChef;
     private String nombreChef;
     private EspecialidadChef especialidadChef;
     private int experiencia;
