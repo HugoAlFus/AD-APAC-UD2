@@ -3,6 +3,8 @@ package es.cheste.dao;
 import es.cheste.entidad.Chef;
 import es.cheste.utilidad.DAOException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ChefDAO {
@@ -16,4 +18,6 @@ public interface ChefDAO {
     void actualizar(Chef chef) throws DAOException;
 
     void eliminar(int idChef) throws DAOException;
+
+    Connection obtenerConexion() throws SQLException;
 }
