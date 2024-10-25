@@ -11,13 +11,11 @@ public interface PedidoDAO {
 
     void insertar(Pedido pedido) throws DAOException;
 
-    Pedido obtenerPorDNI(int idPedido) throws DAOException;
+    Pedido obtenerPorID(int idPedido) throws DAOException;
 
     List<Pedido> obtenerTodos() throws DAOException;
 
     void actualizar(Pedido pedido) throws DAOException;
 
     void eliminar(int idPedido) throws DAOException;
-
-    Connection obtenerConexion() throws SQLException;
 }

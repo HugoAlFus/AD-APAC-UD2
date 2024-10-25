@@ -19,6 +19,4 @@ public interface ClienteDAO {
     void actualizar(Cliente cliente) throws DAOException;
 
     void eliminar(int idCliente) throws DAOException;
-
-    Connection obtenerConexion() throws SQLException;
 }

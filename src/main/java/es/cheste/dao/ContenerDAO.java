@@ -18,6 +18,4 @@ public interface ContenerDAO {
     void actualizar(Contener contener) throws DAOException;
 
     void eliminar(int idPedido, int idPlato) throws DAOException;
-
-    Connection obtenerConexion() throws SQLException;
 }

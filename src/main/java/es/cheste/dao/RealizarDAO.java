@@ -11,7 +11,7 @@ public interface RealizarDAO {
 
     void insertar(Realizar realizar) throws DAOException;
 
-    Realizar obtenerPorDNI(int idPlato, int idChef) throws DAOException;
+    Realizar obtenerPorID(int idPlato, int idChef) throws DAOException;
 
     List<Realizar> obtenerTodos() throws DAOException;
 
@@ -19,5 +19,4 @@ public interface RealizarDAO {
 
     void eliminar(int idPlato, int idChef) throws DAOException;
 
-    Connection obtenerConexion() throws SQLException;
 }
