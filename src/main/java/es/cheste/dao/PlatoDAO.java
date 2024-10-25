@@ -19,5 +19,4 @@ public interface PlatoDAO {
 
     void eliminar(int idPlato) throws DAOException;
 
-    Connection obtenerConexion() throws SQLException;
 }

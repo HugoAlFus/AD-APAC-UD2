@@ -19,5 +19,4 @@ public interface ChefDAO {
 
     void eliminar(int idChef) throws DAOException;
 
-    Connection obtenerConexion() throws SQLException;
 }

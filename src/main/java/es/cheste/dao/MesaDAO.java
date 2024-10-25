@@ -11,7 +11,7 @@ public interface MesaDAO {
 
     void insertar(Mesa mesa) throws DAOException;
 
-    Mesa obtenerPorDNI(int idMesa) throws DAOException;
+    Mesa obtenerPorID(int idMesa) throws DAOException;
 
     List<Mesa> obtenerTodos() throws DAOException;
 
@@ -19,5 +19,4 @@ public interface MesaDAO {
 
     void eliminar(int idMesa) throws DAOException;
 
-    Connection obtenerConexion() throws SQLException;
 }
