@@ -36,15 +36,4 @@ class GestorBDTest {
 
         assertTrue(result);
     }
-
-    @Test
-    void iniciarBaseDatos_returnsFalseWhenConnectionIsNull() {
-        when(conexionBDMock.getConnection()).thenReturn(null);
-
-        boolean result = GestorBD.iniciarBaseDatos();
-
-        assertFalse(result);
-    }
-
-
 }

@@ -17,9 +17,7 @@ public class GestorBD {
 
     private static final String RUTA_SQL_CREACION = "src/main/resources/sql/crear_tablas.sql";
     private static final String RUTA_SQL_INSERCION = "src/main/resources/sql/insertar_datos.sql";
-    private static final String RUTA_SQL_TRIGGER = "src/main/resources/sql/triggers.sql";
     private static final String[] TABLAS = {"PLATO", "CHEF", "CLIENTE", "MESA", "PEDIDO", "CONTENER", "REALIZAR"};
-    private static final String[] DELIMITADORES = {";", "--"};
     private static final Logger LOGGER = LogManager.getLogger(GestorBD.class);
 
     /**
@@ -42,7 +40,6 @@ public class GestorBD {
                 ejecutarSentenciasSQL(RUTA_SQL_CREACION, connection);
                 ejecutarSentenciasSQL(RUTA_SQL_INSERCION, connection);
                 connection.commit();
-                //ejecutarSentenciasSQL(RUTA_SQL_TRIGGER, connection);
                 esValida = Boolean.TRUE;
             } else LOGGER.info("Las tablas ya existen");
         } catch (SQLException e) {
@@ -62,7 +59,7 @@ public class GestorBD {
     /**
      * Lee un archivo SQL y lo divide en sentencias SQL utilizando el delimitador especificado.
      *
-     * @param ruta        Ruta del archivo SQL.
+     * @param ruta Ruta del archivo SQL.
      * @return Un array de sentencias SQL.
      */
     private static String[] leerSQL(String ruta) {
@@ -71,10 +68,9 @@ public class GestorBD {
         String[] listaSQL = null;
 
         try {
-                textoSQL = Files.readString(path);
-            if(!ruta.equalsIgnoreCase(RUTA_SQL_TRIGGER)) {
-                listaSQL = textoSQL.split(";");
-            } else listaSQL = new String[]{textoSQL};
+
+            textoSQL = Files.readString(path);
+            listaSQL = textoSQL.split(";");
 
         } catch (IOException e) {
             LOGGER.error("Hubo un error al leer los datos del archivo '{}' {}", ruta, e.getMessage());
@@ -85,8 +81,8 @@ public class GestorBD {
     /**
      * Ejecuta las sentencias SQL de un archivo en la conexión especificada.
      *
-     * @param ruta        Ruta del archivo SQL.
-     * @param connection  Conexión a la base de datos
+     * @param ruta       Ruta del archivo SQL.
+     * @param connection Conexión a la base de datos
      * @throws SQLException Si ocurre un error al ejecutar las sentencias SQL.
      */
     private static void ejecutarSentenciasSQL(String ruta, Connection connection) throws SQLException {
@@ -135,11 +131,5 @@ public class GestorBD {
             return Boolean.TRUE;
         }
         return Boolean.TRUE;
-    }
-
-    private static void ejecutarTrigger() {
-        String[] sqlTrigger = leerSQL(RUTA_SQL_TRIGGER);
-
-
     }
 }
