@@ -3,6 +3,8 @@ package es.cheste.dao;
 import es.cheste.entidad.Pedido;
 import es.cheste.utilidad.DAOException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PedidoDAO {
@@ -16,4 +18,6 @@ public interface PedidoDAO {
     void actualizar(Pedido pedido) throws DAOException;
 
     void eliminar(int idPedido) throws DAOException;
+
+    Connection obtenerConexion() throws SQLException;
 }

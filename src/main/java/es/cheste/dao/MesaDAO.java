@@ -3,6 +3,8 @@ package es.cheste.dao;
 import es.cheste.entidad.Mesa;
 import es.cheste.utilidad.DAOException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface MesaDAO {
@@ -16,4 +18,6 @@ public interface MesaDAO {
     void actualizar(Mesa mesa) throws DAOException;
 
     void eliminar(int idMesa) throws DAOException;
+
+    Connection obtenerConexion() throws SQLException;
 }

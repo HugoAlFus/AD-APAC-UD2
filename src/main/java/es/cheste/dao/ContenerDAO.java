@@ -3,6 +3,8 @@ package es.cheste.dao;
 import es.cheste.entidad.Contener;
 import es.cheste.utilidad.DAOException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ContenerDAO {
@@ -16,4 +18,6 @@ public interface ContenerDAO {
     void actualizar(Contener contener) throws DAOException;
 
     void eliminar(int idPedido, int idPlato) throws DAOException;
+
+    Connection obtenerConexion() throws SQLException;
 }
