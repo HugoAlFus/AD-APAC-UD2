@@ -4,6 +4,7 @@ import es.cheste.dao.RealizarDAO;
 import es.cheste.entidad.Realizar;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,16 +13,10 @@ import java.util.List;
 
 public class RealizarDAOImpl implements RealizarDAO {
 
-    private static final String INSERTAR = "INSERT INTO REALIZAR (ID_PLATO, ID_CHEF, FECHA) VALUES (?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM REALIZAR WHERE ID_PLATO=? AND ID_CHEF=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM REALIZAR";
-    private static final String ACTUALIZAR = "UPDATE REALIZAR SET FECHA=? WHERE ID_PLATO=? AND ID_CHEF=?";
-    private static final String ELIMINAR = "DELETE FROM REALIZAR WHERE ID_PLATO=? AND ID_CHEF=?";
-
     @Override
     public void insertar(Realizar realizar) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.realizar"))) {
 
             ps.setInt(1, realizar.getIdPlato());
             ps.setInt(2, realizar.getIdChef());
@@ -42,7 +37,7 @@ public class RealizarDAOImpl implements RealizarDAO {
     public Realizar obtenerPorID(int idPlato, int idChef) throws DAOException {
         Realizar realizar = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.realizar"))) {
 
             ps.setInt(1, idPlato);
             ps.setInt(2, idChef);
@@ -65,7 +60,7 @@ public class RealizarDAOImpl implements RealizarDAO {
         List<Realizar> realizarList = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.realizar"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -83,7 +78,7 @@ public class RealizarDAOImpl implements RealizarDAO {
     @Override
     public void actualizar(Realizar realizar) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.realizar"))) {
 
             ps.setDate(1, Date.valueOf(realizar.getFecha()));
             ps.setInt(2, realizar.getIdPlato());
@@ -103,7 +98,7 @@ public class RealizarDAOImpl implements RealizarDAO {
     @Override
     public void eliminar(int idPlato, int idChef) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.realizar"))) {
 
             ps.setInt(1, idPlato);
             ps.setInt(2, idChef);

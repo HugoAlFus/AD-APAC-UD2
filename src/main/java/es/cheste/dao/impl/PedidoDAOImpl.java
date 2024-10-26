@@ -5,6 +5,7 @@ import es.cheste.entidad.Pedido;
 import es.cheste.entidad.enums.EstadoPedido;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,16 +14,10 @@ import java.util.List;
 
 public class PedidoDAOImpl implements PedidoDAO {
 
-    private static final String INSERTAR = "INSERT INTO PEDIDO (FECHA_PEDIDO, PRECIO_TOTAL, ESTADO_PEDIDO, ID_CLIENTE, ID_MESA) VALUES (?,?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM PEDIDO WHERE ID_PEDIDO=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM PEDIDO";
-    private static final String ACTUALIZAR = "UPDATE PEDIDO SET FECHA_PEDIDO=?, PRECIO_TOTAL=?, ESTADO_PEDIDO=?, ID_CLIENTE=?, ID_MESA=? WHERE ID_PEDIDO=?";
-    private static final String ELIMINAR = "DELETE FROM PEDIDO WHERE ID_PEDIDO=?";
-
     @Override
     public void insertar(Pedido pedido) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.pedido"), Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDate(1, Date.valueOf(pedido.getFechaPedido()));
             ps.setDouble(2, pedido.getPrecioTotal());
@@ -50,7 +45,7 @@ public class PedidoDAOImpl implements PedidoDAO {
     public Pedido obtenerPorID(int idPedido) throws DAOException {
         Pedido pedido = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.pedido"))) {
 
             ps.setInt(1, idPedido);
 
@@ -72,7 +67,7 @@ public class PedidoDAOImpl implements PedidoDAO {
         List<Pedido> pedidos = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.pedido"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -90,7 +85,7 @@ public class PedidoDAOImpl implements PedidoDAO {
     @Override
     public void actualizar(Pedido pedido) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.pedido"))) {
 
             ps.setDate(1, Date.valueOf(pedido.getFechaPedido()));
             ps.setDouble(2, pedido.getPrecioTotal());
@@ -113,7 +108,7 @@ public class PedidoDAOImpl implements PedidoDAO {
     @Override
     public void eliminar(int idPedido) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.pedido"))) {
 
             ps.setInt(1, idPedido);
 

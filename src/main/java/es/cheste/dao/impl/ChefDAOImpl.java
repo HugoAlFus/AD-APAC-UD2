@@ -5,6 +5,7 @@ import es.cheste.entidad.Chef;
 import es.cheste.entidad.enums.EspecialidadChef;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,18 +13,10 @@ import java.util.List;
 
 public class ChefDAOImpl implements ChefDAO {
 
-    private static final String INSERTAR = "INSERT INTO CHEF (NOMBRE_CHEF, ESPECIALIDAD_CHEF, EXPERIENCIA, TELEFONO_CHEF, DISPONIBLE) " +
-            "VALUES (?,?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM CHEF WHERE ID_CHEF=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM CHEF";
-    private static final String ACTUALIZAR = "UPDATE CHEF SET NOMBRE_CHEF=?, ESPECIALIDAD_CHEF=?, EXPERIENCIA=?, TELEFONO_CHEF=?, DISPONIBLE=? " +
-            "WHERE ID_CHEF=?";
-    private static final String ELIMINAR = "DELETE FROM CHEF WHERE ID_CHEF=?";
-
     @Override
     public void insertar(Chef chef) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.chef"), Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, chef.getNombreChef());
             ps.setString(2, String.valueOf(chef.getEspecialidadChef()));
@@ -52,7 +45,7 @@ public class ChefDAOImpl implements ChefDAO {
     public Chef obtenerPorID(int idChef) throws DAOException {
         Chef chef = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.chef"))) {
 
             ps.setInt(1, idChef);
 
@@ -74,7 +67,7 @@ public class ChefDAOImpl implements ChefDAO {
         List<Chef> chefs = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.chef"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -92,7 +85,7 @@ public class ChefDAOImpl implements ChefDAO {
     @Override
     public void actualizar(Chef chef) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.chef"))) {
 
             ps.setString(1, chef.getNombreChef());
             ps.setString(2, String.valueOf(chef.getEspecialidadChef()));
@@ -115,7 +108,7 @@ public class ChefDAOImpl implements ChefDAO {
     @Override
     public void eliminar(int idChef) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.chef"))) {
 
             ps.setInt(1, idChef);
 

@@ -4,6 +4,7 @@ import es.cheste.dao.ContenerDAO;
 import es.cheste.entidad.Contener;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,16 +15,10 @@ import java.util.List;
 
 public class ContenerDAOImpl implements ContenerDAO {
 
-    private static final String INSERTAR = "INSERT INTO CONTENER (ID_PEDIDO, ID_PLATO, CANTIDAD, SUBTOTAL) VALUES (?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM CONTENER WHERE ID_PEDIDO=? AND ID_PLATO=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM CONTENER";
-    private static final String ACTUALIZAR = "UPDATE CONTENER SET CANTIDAD=?, SUBTOTAL=? WHERE ID_PEDIDO=? AND ID_PLATO=?";
-    private static final String ELIMINAR = "DELETE FROM CONTENER WHERE ID_PEDIDO=? AND ID_PLATO=?";
-
     @Override
     public void insertar(Contener contener) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.contener"))) {
 
             ps.setInt(1, contener.getIdPedido());
             ps.setInt(2, contener.getIdPlato());
@@ -45,7 +40,7 @@ public class ContenerDAOImpl implements ContenerDAO {
     public Contener obtenerPorID(int idPedido, int idPlato) throws DAOException {
         Contener contener = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.contener"))) {
 
             ps.setInt(1, idPedido);
             ps.setInt(2, idPlato);
@@ -68,7 +63,7 @@ public class ContenerDAOImpl implements ContenerDAO {
         List<Contener> contenerList = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.contener"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -86,7 +81,7 @@ public class ContenerDAOImpl implements ContenerDAO {
     @Override
     public void actualizar(Contener contener) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.contener"))) {
 
             ps.setInt(1, contener.getCantidad());
             ps.setInt(2, contener.getIdPedido());
@@ -107,7 +102,7 @@ public class ContenerDAOImpl implements ContenerDAO {
     @Override
     public void eliminar(int idPedido, int idPlato) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.contener"))) {
 
             ps.setInt(1, idPedido);
             ps.setInt(2, idPlato);

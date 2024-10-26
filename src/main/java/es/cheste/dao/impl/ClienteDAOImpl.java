@@ -4,6 +4,7 @@ import es.cheste.dao.ClienteDAO;
 import es.cheste.entidad.Cliente;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,16 +12,12 @@ import java.util.List;
 
 public class ClienteDAOImpl implements ClienteDAO {
 
-    private static final String INSERTAR = "INSERT INTO CLIENTE (NOMBRE_CLIENTE, TELEFONO_CLIENTE, CORREO_ELECTRONICO, DIRECCION) VALUES (?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM CLIENTE WHERE ID_CLIENTE=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM CLIENTE";
-    private static final String ACTUALIZAR = "UPDATE CLIENTE SET NOMBRE_CLIENTE=?, TELEFONO_CLIENTE=?, CORREO_ELECTRONICO=?, DIRECCION=? WHERE ID_CLIENTE=?";
-    private static final String ELIMINAR = "DELETE FROM CLIENTE WHERE ID_CLIENTE=?";
+
 
     @Override
     public void insertar(Cliente cliente) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.cliente"), Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, cliente.getNombreCliente());
             ps.setString(2, cliente.getTelefonoCliente());
@@ -47,7 +44,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     public Cliente obtenerPorID(int idCliente) throws DAOException {
         Cliente cliente = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.cliente"))) {
 
             ps.setInt(1, idCliente);
 
@@ -69,7 +66,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obetner.todos.cliente"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -87,7 +84,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     @Override
     public void actualizar(Cliente cliente) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.cliente"))) {
 
             ps.setString(1, cliente.getNombreCliente());
             ps.setString(2, cliente.getTelefonoCliente());
@@ -109,7 +106,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     @Override
     public void eliminar(int idCliente) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.cliente"))) {
 
             ps.setInt(1, idCliente);
 
