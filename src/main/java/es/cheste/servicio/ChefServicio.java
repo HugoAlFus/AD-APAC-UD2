@@ -21,7 +21,7 @@ public class ChefServicio {
 
     public void agregarChef(String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefono, boolean disponible) {
 
-        Chef chef = new Chef(nombreChef,especialidadChef,experiencia,telefono,disponible);
+        Chef chef = new Chef(nombreChef, especialidadChef, experiencia, telefono, disponible);
 
         try {
             chefDAO.insertar(chef);
@@ -32,44 +32,44 @@ public class ChefServicio {
         }
     }
 
-    public Chef obtenerChef(int idChef){
-        try{
+    public Chef obtenerChef(int idChef) {
+        try {
             return chefDAO.obtenerPorID(idChef);
-        }catch (DAOException e){
+        } catch (DAOException e) {
             LOGGER.error("Hubo un error al obtener el chef {}", e.getMessage());
             return null;
         }
     }
 
-    public List<Chef> lsitarChefs(){
-        try{
+    public List<Chef> lsitarChefs() {
+        try {
             return chefDAO.obtenerTodos();
-        }catch (DAOException e){
+        } catch (DAOException e) {
             LOGGER.error("Hubo un error al obtener todos los chefs {}", e.getMessage());
             return null;
         }
     }
 
-    public void actualizarChef(int idChef, String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefonoChef, boolean disponible){
+    public void actualizarChef(int idChef, String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefonoChef, boolean disponible) {
 
-
+        Chef chef = new Chef(idChef, nombreChef, especialidadChef, experiencia, telefonoChef, disponible);
 
         try {
-            clienteDAO.actualizar(cliente);
-            System.out.println("Cliente actualizado: " + cliente);
-        } catch (DAOException e){
-            System.err.println("El cliente no se pudo actualizar");
-            LOGGER.error("No se actualizo el cliente {}", e.getMessage());
+            chefDAO.actualizar(chef);
+            System.out.println("Cliente actualizado: " + chef);
+        } catch (DAOException e) {
+            System.err.println("El chef no se pudo actualizar");
+            LOGGER.error("No se actualizo el chef {}", e.getMessage());
         }
     }
 
-    public void eliminarCliente(String dni){
-        try{
-            clienteDAO.eliminar(dni);
-            System.out.println("Cliente eliminado con dni: " + dni);
-        }catch (DAOException e){
-            System.err.println("Hubo un error al intentar eliminar el cliente");
-            LOGGER.error("Hubo un error al eliminar el cliente {}",e.getMessage());
+    public void eliminarChef(int idchef) {
+        try {
+            chefDAO.eliminar(idchef);
+            System.out.println("Chef eliminado con ID " + idchef);
+        } catch (DAOException e) {
+            System.err.println("Hubo un error al intentar eliminar el chef");
+            LOGGER.error("Hubo un error al eliminar el chef {}", e.getMessage());
         }
     }
 }
