@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RealizarDAOImpl implements RealizarDAO {
+
     private static final String INSERTAR = "INSERT INTO REALIZAR (ID_PLATO, ID_CHEF, FECHA) VALUES (?,?,?)";
     private static final String OBTENER_POR_ID = "SELECT * FROM REALIZAR WHERE ID_PLATO=? AND ID_CHEF=?";
     private static final String OBTENER_TODOS = "SELECT * FROM REALIZAR";
