@@ -14,4 +14,11 @@ public class Mesa {
     private int capacidad;
     private UbicacionMesa ubicacionMesa;
     private EstadoMesa estadoMesa;
+
+    public Mesa(int numeroMesa, int capacidad, UbicacionMesa ubicacionMesa, EstadoMesa estadoMesa) {
+        this.numeroMesa = numeroMesa;
+        this.capacidad = capacidad;
+        this.ubicacionMesa = ubicacionMesa;
+        this.estadoMesa = estadoMesa;
+    }
 }
