@@ -12,6 +12,9 @@ import java.sql.*;
 /**
  * Clase GestorBD que se encarga de la gestión de la base de datos.
  * Incluye métodos para iniciar la base de datos, ejecutar sentencias SQL y comprobar la existencia de tablas.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
  */
 public class GestorBD {
 
