@@ -6,6 +6,7 @@ import es.cheste.entidad.enums.EstadoMesa;
 import es.cheste.entidad.enums.UbicacionMesa;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,16 +14,10 @@ import java.util.List;
 
 public class MesaDAOImpl implements MesaDAO {
 
-    private static final String INSERTAR = "INSERT INTO MESA (NUMERO_MESA, CAPACIDAD, UBICACION_MESA, ESTADO_MESA) VALUES (?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM MESA WHERE ID_MESA=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM MESA";
-    private static final String ACTUALIZAR = "UPDATE MESA SET NUMERO_MESA=?, CAPACIDAD=?, UBICACION_MESA=?, ESTADO_MESA=? WHERE ID_MESA=?";
-    private static final String ELIMINAR = "DELETE FROM MESA WHERE ID_MESA=?";
-
     @Override
     public void insertar(Mesa mesa) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.mesa"), Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, mesa.getNumeroMesa());
             ps.setInt(2, mesa.getCapacidad());
@@ -49,7 +44,7 @@ public class MesaDAOImpl implements MesaDAO {
     public Mesa obtenerPorID(int idMesa) throws DAOException {
         Mesa mesa = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.mesa"))) {
 
             ps.setInt(1, idMesa);
 
@@ -71,7 +66,7 @@ public class MesaDAOImpl implements MesaDAO {
         List<Mesa> mesas = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.mesa"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -89,7 +84,7 @@ public class MesaDAOImpl implements MesaDAO {
     @Override
     public void actualizar(Mesa mesa) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.mesa"))) {
 
             ps.setInt(1, mesa.getNumeroMesa());
             ps.setInt(2, mesa.getCapacidad());
@@ -111,7 +106,7 @@ public class MesaDAOImpl implements MesaDAO {
     @Override
     public void eliminar(int idMesa) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.mesa"))) {
 
             ps.setInt(1, idMesa);
 

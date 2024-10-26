@@ -5,6 +5,7 @@ import es.cheste.entidad.Plato;
 import es.cheste.entidad.enums.CategoriaPlato;
 import es.cheste.utilidad.ConexionBD;
 import es.cheste.utilidad.DAOException;
+import es.cheste.utilidad.SentenciasSQL;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,16 +13,10 @@ import java.util.List;
 
 public class PlatoDAOImpl implements PlatoDAO {
 
-    private static final String INSERTAR = "INSERT INTO PLATO (NOMBRE_PLATO,DESCRIPCION, PRECIO_PLATO, CATEGORIA_PLATO) VALUES (?,?,?,?)";
-    private static final String OBTENER_POR_ID = "SELECT * FROM PLATO WHERE ID_PLATO=?";
-    private static final String OBTENER_TODOS = "SELECT * FROM PLATO";
-    private static final String ACTUALIZAR = "UPDATE PLATO SET NOMBRE_PLATO=?, DESCRIPCION=?, PRECIO_PLATO=?, CATEGORIA_PLATO=? WHERE ID_PLATO=?";
-    private static final String ELIMINAR = "DELETE FROM PLATO WHERE ID_PLATO=?";
-
     @Override
     public void insertar(Plato plato) throws DAOException {
         try (Connection connection = obtenerConexion();
-             PreparedStatement ps = connection.prepareStatement(INSERTAR, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(SentenciasSQL.getSentencia("insertar.plato"), Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, plato.getNombrePlato());
             ps.setString(2, plato.getDescripcion());
@@ -48,7 +43,7 @@ public class PlatoDAOImpl implements PlatoDAO {
     public Plato obtenerPorID(int idPlato) throws DAOException {
         Plato plato = null;
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_POR_ID)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.id.plato"))) {
 
             ps.setInt(1, idPlato);
 
@@ -70,7 +65,7 @@ public class PlatoDAOImpl implements PlatoDAO {
         List<Plato> platos = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(OBTENER_TODOS);
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.plato"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -88,7 +83,7 @@ public class PlatoDAOImpl implements PlatoDAO {
     @Override
     public void actualizar(Plato plato) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ACTUALIZAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.plato"))) {
 
             ps.setString(1, plato.getNombrePlato());
             ps.setString(2, plato.getDescripcion());
@@ -110,7 +105,7 @@ public class PlatoDAOImpl implements PlatoDAO {
     @Override
     public void eliminar(int idPlato) throws DAOException {
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(ELIMINAR)) {
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("eliminar.plato"))) {
 
             ps.setInt(1, idPlato);
 
