@@ -12,7 +12,7 @@ public interface ClienteDAO {
 
     void insertar(Cliente cliente) throws DAOException;
 
-    Chef obtenerPorID(int idCliente) throws DAOException;
+    Cliente obtenerPorID(int idCliente) throws DAOException;
 
     List<Cliente> obtenerTodos() throws DAOException;
 

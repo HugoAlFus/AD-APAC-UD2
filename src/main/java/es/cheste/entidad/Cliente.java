@@ -13,4 +13,10 @@ public class Cliente {
     private String correoElectronico;
     private String direccion;
 
+    public Cliente(String nombreCliente, String telefonoCliente, String correoElectronico, String direccion) {
+        this.nombreCliente = nombreCliente;
+        this.telefonoCliente = telefonoCliente;
+        this.correoElectronico = correoElectronico;
+        this.direccion = direccion;
+    }
 }

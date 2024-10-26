@@ -14,4 +14,10 @@ public class Plato {
     private double precioPlato;
     private CategoriaPlato categoriaPlato;
 
+    public Plato(String nombrePlato, String descripcion, double precioPlato, CategoriaPlato categoriaPlato) {
+        this.nombrePlato = nombrePlato;
+        this.descripcion = descripcion;
+        this.precioPlato = precioPlato;
+        this.categoriaPlato = categoriaPlato;
+    }
 }

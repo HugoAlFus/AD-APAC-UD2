@@ -4,8 +4,8 @@ public enum EspecialidadChef {
 
     PARRILLA,
     PASTELERIA,
-    COMIDA_JAPONESA,
-    COMIDA_ITALIANA,
+    JAPONESA,
+    ITALIANA,
     PESCADO,
     MARISCO,
     PANADERIA,

@@ -14,4 +14,12 @@ public class Chef {
     private int experiencia;
     private String telefonoChef;
     private boolean estaDisponible;
+
+    public Chef(String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefonoChef, boolean estaDisponible) {
+        this.nombreChef = nombreChef;
+        this.especialidadChef = especialidadChef;
+        this.experiencia = experiencia;
+        this.telefonoChef = telefonoChef;
+        this.estaDisponible = estaDisponible;
+    }
 }
