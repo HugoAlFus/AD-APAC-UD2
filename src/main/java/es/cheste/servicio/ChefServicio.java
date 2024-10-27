@@ -10,17 +10,36 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con chefs.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar chefs.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class ChefServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(ChefServicio.class);
     private ChefDAO chefDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Chef.
+     */
     public ChefServicio() {
         this.chefDAO = new ChefDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo chef.
+     *
+     * @param nombreChef       Nombre del chef.
+     * @param especialidadChef Especialidad del chef.
+     * @param experiencia      Años de experiencia del chef.
+     * @param telefono         Teléfono del chef.
+     * @param disponible       Disponibilidad del chef.
+     */
     public void agregarChef(String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefono, boolean disponible) {
-
         Chef chef = new Chef(nombreChef, especialidadChef, experiencia, telefono, disponible);
 
         try {
@@ -32,6 +51,12 @@ public class ChefServicio {
         }
     }
 
+    /**
+     * Obtiene un chef por su ID.
+     *
+     * @param idChef ID del chef.
+     * @return El chef correspondiente al ID proporcionado.
+     */
     public Chef obtenerChef(int idChef) {
         try {
             return chefDAO.obtenerPorID(idChef);
@@ -41,6 +66,11 @@ public class ChefServicio {
         }
     }
 
+    /**
+     * Lista todos los chefs.
+     *
+     * @return Lista de todos los chefs.
+     */
     public List<Chef> lsitarChefs() {
         try {
             return chefDAO.obtenerTodos();
@@ -50,8 +80,17 @@ public class ChefServicio {
         }
     }
 
+    /**
+     * Actualiza la información de un chef.
+     *
+     * @param idChef           ID del chef.
+     * @param nombreChef       Nombre del chef.
+     * @param especialidadChef Especialidad del chef.
+     * @param experiencia      Años de experiencia del chef.
+     * @param telefonoChef     Teléfono del chef.
+     * @param disponible       Disponibilidad del chef.
+     */
     public void actualizarChef(int idChef, String nombreChef, EspecialidadChef especialidadChef, int experiencia, String telefonoChef, boolean disponible) {
-
         Chef chef = new Chef(idChef, nombreChef, especialidadChef, experiencia, telefonoChef, disponible);
 
         try {
@@ -63,6 +102,11 @@ public class ChefServicio {
         }
     }
 
+    /**
+     * Elimina un chef por su ID.
+     *
+     * @param idchef ID del chef.
+     */
     public void eliminarChef(int idchef) {
         try {
             chefDAO.eliminar(idchef);

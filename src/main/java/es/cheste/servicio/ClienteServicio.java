@@ -9,15 +9,34 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con clientes.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar clientes.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class ClienteServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(ClienteServicio.class);
     private ClienteDAO clienteDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Cliente.
+     */
     public ClienteServicio() {
         this.clienteDAO = new ClienteDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo cliente.
+     *
+     * @param nombreCliente     Nombre del cliente.
+     * @param telefonoCliente   Teléfono del cliente.
+     * @param correoElectronico Correo electrónico del cliente.
+     * @param direccion         Dirección del cliente.
+     */
     public void agregarCliente(String nombreCliente, String telefonoCliente, String correoElectronico, String direccion) {
         Cliente cliente = new Cliente(nombreCliente, telefonoCliente, correoElectronico, direccion);
 
@@ -30,6 +49,12 @@ public class ClienteServicio {
         }
     }
 
+    /**
+     * Obtiene un cliente por su ID.
+     *
+     * @param idCliente ID del cliente.
+     * @return El cliente correspondiente al ID proporcionado.
+     */
     public Cliente obtenerCliente(int idCliente) {
         try {
             return clienteDAO.obtenerPorID(idCliente);
@@ -39,6 +64,11 @@ public class ClienteServicio {
         }
     }
 
+    /**
+     * Lista todos los clientes.
+     *
+     * @return Lista de todos los clientes.
+     */
     public List<Cliente> listarClientes() {
         try {
             return clienteDAO.obtenerTodos();
@@ -48,6 +78,15 @@ public class ClienteServicio {
         }
     }
 
+    /**
+     * Actualiza la información de un cliente.
+     *
+     * @param idCliente         ID del cliente.
+     * @param nombreCliente     Nombre del cliente.
+     * @param telefonoCliente   Teléfono del cliente.
+     * @param correoElectronico Correo electrónico del cliente.
+     * @param direccion         Dirección del cliente.
+     */
     public void actualizarCliente(int idCliente, String nombreCliente, String telefonoCliente, String correoElectronico, String direccion) {
         Cliente cliente = new Cliente(idCliente, nombreCliente, telefonoCliente, correoElectronico, direccion);
 
@@ -60,6 +99,11 @@ public class ClienteServicio {
         }
     }
 
+    /**
+     * Elimina un cliente por su ID.
+     *
+     * @param idCliente ID del cliente.
+     */
     public void eliminarCliente(int idCliente) {
         try {
             clienteDAO.eliminar(idCliente);

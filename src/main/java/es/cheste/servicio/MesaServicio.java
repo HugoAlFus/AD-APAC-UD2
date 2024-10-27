@@ -11,15 +11,34 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con mesas.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar mesas.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class MesaServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(MesaServicio.class);
     private MesaDAO mesaDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Mesa.
+     */
     public MesaServicio() {
         this.mesaDAO = new MesaDAOImpl();
     }
 
+    /**
+     * Agrega una nueva mesa.
+     *
+     * @param numeroMesa    Número de la mesa.
+     * @param capacidad     Capacidad de la mesa.
+     * @param ubicacionMesa Ubicación de la mesa.
+     * @param estadoMesa    Estado de la mesa.
+     */
     public void agregarMesa(int numeroMesa, int capacidad, UbicacionMesa ubicacionMesa, EstadoMesa estadoMesa) {
         Mesa mesa = new Mesa(numeroMesa, capacidad, ubicacionMesa, estadoMesa);
 
@@ -32,6 +51,12 @@ public class MesaServicio {
         }
     }
 
+    /**
+     * Obtiene una mesa por su ID.
+     *
+     * @param idMesa ID de la mesa.
+     * @return La mesa correspondiente al ID proporcionado.
+     */
     public Mesa obtenerMesa(int idMesa) {
         try {
             return mesaDAO.obtenerPorID(idMesa);
@@ -41,6 +66,11 @@ public class MesaServicio {
         }
     }
 
+    /**
+     * Lista todas las mesas.
+     *
+     * @return Lista de todas las mesas.
+     */
     public List<Mesa> listarMesas() {
         try {
             return mesaDAO.obtenerTodos();
@@ -50,6 +80,15 @@ public class MesaServicio {
         }
     }
 
+    /**
+     * Actualiza la información de una mesa.
+     *
+     * @param idMesa        ID de la mesa.
+     * @param numeroMesa    Número de la mesa.
+     * @param capacidad     Capacidad de la mesa.
+     * @param ubicacionMesa Ubicación de la mesa.
+     * @param estadoMesa    Estado de la mesa.
+     */
     public void actualizarMesa(int idMesa, int numeroMesa, int capacidad, UbicacionMesa ubicacionMesa, EstadoMesa estadoMesa) {
         Mesa mesa = new Mesa(idMesa, numeroMesa, capacidad, ubicacionMesa, estadoMesa);
 
@@ -62,6 +101,11 @@ public class MesaServicio {
         }
     }
 
+    /**
+     * Elimina una mesa por su ID.
+     *
+     * @param idMesa ID de la mesa.
+     */
     public void eliminarMesa(int idMesa) {
         try {
             mesaDAO.eliminar(idMesa);
