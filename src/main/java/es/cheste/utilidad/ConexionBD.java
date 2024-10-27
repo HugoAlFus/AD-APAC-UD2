@@ -23,7 +23,7 @@ import java.util.Properties;
 public class ConexionBD {
 
     private static final Logger LOGGER = LogManager.getLogger(ConexionBD.class);
-    private static final String FILENAME = "src/main/resources/conexion/application.properties";
+    private static final String FILENAME = "src/main/resources/properties/conexion/application.properties";
 
     private Connection connection = null;
 
