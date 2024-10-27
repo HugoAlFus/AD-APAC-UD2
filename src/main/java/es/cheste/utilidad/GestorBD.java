@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Clase GestorBD que se encarga de la gestión de la base de datos.
@@ -44,7 +47,10 @@ public class GestorBD {
                 ejecutarSentenciasSQL(RUTA_SQL_INSERCION, connection);
                 connection.commit();
                 esValida = Boolean.TRUE;
-            } else LOGGER.info("Las tablas ya existen");
+            } else {
+                LOGGER.info("Las tablas ya existen");
+                esValida = Boolean.TRUE;
+            }
         } catch (SQLException e) {
             LOGGER.error("Error al iniciar la base de datos: {}", e.getMessage());
             try {
@@ -121,18 +127,21 @@ public class GestorBD {
      * @return true si todas las tablas existen, false en caso contrario.
      */
     private static boolean comprobarExistenTablas(Connection connection) {
-        try {
-            DatabaseMetaData metaData = connection.getMetaData();
+        boolean hayTabla = Boolean.FALSE;
+
+        try (Statement statement = connection.createStatement()) {
             for (String tabla : TABLAS) {
-                ResultSet rs = metaData.getTables(null, null, tabla, null);
-                if (!rs.next()) {
-                    return Boolean.FALSE;
+                ResultSet rs = statement.executeQuery(SentenciasSQL.getSentencia("obtener.todos." + tabla.toLowerCase()));
+                if (rs.next()) {
+                    hayTabla = Boolean.TRUE;
+                    return hayTabla;
                 }
             }
+
         } catch (SQLException e) {
             LOGGER.error("Error al verificar la existencia de las tablas: {}", e.getMessage());
-            return Boolean.TRUE;
+            return Boolean.FALSE;
         }
-        return Boolean.TRUE;
+        return hayTabla;
     }
 }
