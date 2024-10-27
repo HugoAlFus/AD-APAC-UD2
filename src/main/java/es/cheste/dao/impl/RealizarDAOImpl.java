@@ -11,8 +11,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz RealizarDAO.
+ * <p>
+ * Proporciona métodos para realizar operaciones CRUD en la entidad Realizar.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
+ */
 public class RealizarDAOImpl implements RealizarDAO {
 
+    /**
+     * Inserta un nuevo registro de realizar en la base de datos.
+     *
+     * @param realizar El objeto Realizar a insertar.
+     * @throws DAOException Si ocurre un error durante la inserción.
+     */
     @Override
     public void insertar(Realizar realizar) throws DAOException {
         try (Connection connection = obtenerConexion();
@@ -33,6 +47,14 @@ public class RealizarDAOImpl implements RealizarDAO {
         }
     }
 
+    /**
+     * Obtiene un registro de realizar por su ID de plato y ID de chef.
+     *
+     * @param idPlato El ID del plato.
+     * @param idChef  El ID del chef.
+     * @return El objeto Realizar correspondiente a los IDs proporcionados.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public Realizar obtenerPorID(int idPlato, int idChef) throws DAOException {
         Realizar realizar = null;
@@ -55,6 +77,12 @@ public class RealizarDAOImpl implements RealizarDAO {
         return realizar;
     }
 
+    /**
+     * Obtiene una lista de todos los registros de realizar.
+     *
+     * @return Una lista de objetos Realizar.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public List<Realizar> obtenerTodos() throws DAOException {
         List<Realizar> realizarList = new ArrayList<>();
@@ -75,6 +103,12 @@ public class RealizarDAOImpl implements RealizarDAO {
         return realizarList;
     }
 
+    /**
+     * Actualiza la información de un registro de realizar existente.
+     *
+     * @param realizar El objeto Realizar con la información actualizada.
+     * @throws DAOException Si ocurre un error durante la actualización.
+     */
     @Override
     public void actualizar(Realizar realizar) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -95,6 +129,13 @@ public class RealizarDAOImpl implements RealizarDAO {
         }
     }
 
+    /**
+     * Elimina un registro de realizar por su ID de plato y ID de chef.
+     *
+     * @param idPlato El ID del plato.
+     * @param idChef  El ID del chef.
+     * @throws DAOException Si ocurre un error durante la eliminación.
+     */
     @Override
     public void eliminar(int idPlato, int idChef) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -114,11 +155,24 @@ public class RealizarDAOImpl implements RealizarDAO {
         }
     }
 
+    /**
+     * Obtiene una conexión a la base de datos.
+     *
+     * @return Un objeto Connection.
+     * @throws SQLException Si ocurre un error al obtener la conexión.
+     */
     public Connection obtenerConexion() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         return conexion.getConnection();
     }
 
+    /**
+     * Mapea un ResultSet a un objeto Realizar.
+     *
+     * @param rs El ResultSet a mapear.
+     * @return Un objeto Realizar.
+     * @throws SQLException Si ocurre un error durante el mapeo.
+     */
     public Realizar mappearRealizar(ResultSet rs) throws SQLException {
         int idPlato = rs.getInt("ID_PLATO");
         int idChef = rs.getInt("ID_CHEF");

@@ -11,8 +11,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz PlatoDAO.
+ * <p>
+ * Proporciona métodos para realizar operaciones CRUD en la entidad Plato.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
+ */
 public class PlatoDAOImpl implements PlatoDAO {
 
+    /**
+     * Inserta un nuevo plato en la base de datos.
+     *
+     * @param plato El objeto Plato a insertar.
+     * @throws DAOException Si ocurre un error durante la inserción.
+     */
     @Override
     public void insertar(Plato plato) throws DAOException {
         try (Connection connection = obtenerConexion();
@@ -20,7 +34,7 @@ public class PlatoDAOImpl implements PlatoDAO {
 
             ps.setString(1, plato.getNombrePlato());
             ps.setString(2, plato.getDescripcion());
-            ps.setDouble(3,plato.getPrecioPlato());
+            ps.setDouble(3, plato.getPrecioPlato());
             ps.setString(4, String.valueOf(plato.getCategoriaPlato()));
 
             int filasAfectadas = ps.executeUpdate();
@@ -39,6 +53,13 @@ public class PlatoDAOImpl implements PlatoDAO {
         }
     }
 
+    /**
+     * Obtiene un plato por su ID.
+     *
+     * @param idPlato El ID del plato a obtener.
+     * @return El objeto Plato correspondiente al ID proporcionado.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public Plato obtenerPorID(int idPlato) throws DAOException {
         Plato plato = null;
@@ -60,6 +81,12 @@ public class PlatoDAOImpl implements PlatoDAO {
         return plato;
     }
 
+    /**
+     * Obtiene una lista de todos los platos.
+     *
+     * @return Una lista de objetos Plato.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public List<Plato> obtenerTodos() throws DAOException {
         List<Plato> platos = new ArrayList<>();
@@ -80,6 +107,12 @@ public class PlatoDAOImpl implements PlatoDAO {
         return platos;
     }
 
+    /**
+     * Actualiza la información de un plato existente.
+     *
+     * @param plato El objeto Plato con la información actualizada.
+     * @throws DAOException Si ocurre un error durante la actualización.
+     */
     @Override
     public void actualizar(Plato plato) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -87,9 +120,9 @@ public class PlatoDAOImpl implements PlatoDAO {
 
             ps.setString(1, plato.getNombrePlato());
             ps.setString(2, plato.getDescripcion());
-            ps.setDouble(3,plato.getPrecioPlato());
+            ps.setDouble(3, plato.getPrecioPlato());
             ps.setString(4, String.valueOf(plato.getCategoriaPlato()));
-            ps.setInt(5,plato.getIdPlato());
+            ps.setInt(5, plato.getIdPlato());
 
             int filasAfectadas = ps.executeUpdate();
 
@@ -102,6 +135,12 @@ public class PlatoDAOImpl implements PlatoDAO {
         }
     }
 
+    /**
+     * Elimina un plato por su ID.
+     *
+     * @param idPlato El ID del plato a eliminar.
+     * @throws DAOException Si ocurre un error durante la eliminación.
+     */
     @Override
     public void eliminar(int idPlato) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -120,11 +159,24 @@ public class PlatoDAOImpl implements PlatoDAO {
         }
     }
 
+    /**
+     * Obtiene una conexión a la base de datos.
+     *
+     * @return Un objeto Connection.
+     * @throws SQLException Si ocurre un error al obtener la conexión.
+     */
     public Connection obtenerConexion() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         return conexion.getConnection();
     }
 
+    /**
+     * Mapea un ResultSet a un objeto Plato.
+     *
+     * @param rs El ResultSet a mapear.
+     * @return Un objeto Plato.
+     * @throws SQLException Si ocurre un error durante el mapeo.
+     */
     public Plato mappearPlato(ResultSet rs) throws SQLException {
         int idPlato = rs.getInt("ID_PLATO");
         String nombrePlato = rs.getString("NOMBRE_PLATO");

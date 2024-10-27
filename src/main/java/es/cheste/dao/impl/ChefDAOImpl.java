@@ -11,8 +11,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz ChefDAO.
+ * <p>
+ * Proporciona métodos para realizar operaciones CRUD en la entidad Chef.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
+ */
 public class ChefDAOImpl implements ChefDAO {
 
+    /**
+     * Inserta un nuevo chef en la base de datos.
+     *
+     * @param chef El objeto Chef a insertar.
+     * @throws DAOException Si ocurre un error durante la inserción.
+     */
     @Override
     public void insertar(Chef chef) throws DAOException {
         try (Connection connection = obtenerConexion();
@@ -21,7 +35,7 @@ public class ChefDAOImpl implements ChefDAO {
             ps.setString(1, chef.getNombreChef());
             ps.setString(2, String.valueOf(chef.getEspecialidadChef()));
             ps.setInt(3, chef.getExperiencia());
-            ps.setString(4,chef.getTelefonoChef());
+            ps.setString(4, chef.getTelefonoChef());
             ps.setBoolean(5, chef.isEstaDisponible());
 
             int filasAfectadas = ps.executeUpdate();
@@ -41,6 +55,13 @@ public class ChefDAOImpl implements ChefDAO {
 
     }
 
+    /**
+     * Obtiene un chef por su ID.
+     *
+     * @param idChef El ID del chef a obtener.
+     * @return El objeto Chef correspondiente al ID proporcionado.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public Chef obtenerPorID(int idChef) throws DAOException {
         Chef chef = null;
@@ -62,6 +83,12 @@ public class ChefDAOImpl implements ChefDAO {
         return chef;
     }
 
+    /**
+     * Obtiene una lista de todos los chefs.
+     *
+     * @return Una lista de objetos Chef.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public List<Chef> obtenerTodos() throws DAOException {
         List<Chef> chefs = new ArrayList<>();
@@ -82,6 +109,12 @@ public class ChefDAOImpl implements ChefDAO {
         return chefs;
     }
 
+    /**
+     * Actualiza la información de un chef existente.
+     *
+     * @param chef El objeto Chef con la información actualizada.
+     * @throws DAOException Si ocurre un error durante la actualización.
+     */
     @Override
     public void actualizar(Chef chef) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -90,9 +123,9 @@ public class ChefDAOImpl implements ChefDAO {
             ps.setString(1, chef.getNombreChef());
             ps.setString(2, String.valueOf(chef.getEspecialidadChef()));
             ps.setInt(3, chef.getExperiencia());
-            ps.setString(4,chef.getTelefonoChef());
+            ps.setString(4, chef.getTelefonoChef());
             ps.setBoolean(5, chef.isEstaDisponible());
-            ps.setInt(6,chef.getIdChef());
+            ps.setInt(6, chef.getIdChef());
 
             int filasAfectadas = ps.executeUpdate();
 
@@ -105,6 +138,12 @@ public class ChefDAOImpl implements ChefDAO {
         }
     }
 
+    /**
+     * Elimina un chef por su ID.
+     *
+     * @param idChef El ID del chef a eliminar.
+     * @throws DAOException Si ocurre un error durante la eliminación.
+     */
     @Override
     public void eliminar(int idChef) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -123,11 +162,24 @@ public class ChefDAOImpl implements ChefDAO {
         }
     }
 
+    /**
+     * Obtiene una conexión a la base de datos.
+     *
+     * @return Un objeto Connection.
+     * @throws SQLException Si ocurre un error al obtener la conexión.
+     */
     public Connection obtenerConexion() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         return conexion.getConnection();
     }
 
+    /**
+     * Mapea un ResultSet a un objeto Chef.
+     *
+     * @param rs El ResultSet a mapear.
+     * @return Un objeto Chef.
+     * @throws SQLException Si ocurre un error durante el mapeo.
+     */
     public Chef mappearChef(ResultSet rs) throws SQLException {
         int idChef = rs.getInt("ID_CHEF");
         String nombreChef = rs.getNString("NOMBRE_CHEF");
@@ -136,6 +188,6 @@ public class ChefDAOImpl implements ChefDAO {
         String telefonoChef = rs.getString("TELEFONO_CHEF");
         boolean disponible = rs.getBoolean("DISPONIBLE");
 
-        return new Chef(idChef,nombreChef,especialidad,experiencia,telefonoChef,disponible);
+        return new Chef(idChef, nombreChef, especialidad, experiencia, telefonoChef, disponible);
     }
 }

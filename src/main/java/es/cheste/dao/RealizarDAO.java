@@ -10,6 +10,7 @@ import java.util.List;
  * <p>
  * Proporciona métodos para realizar operaciones CRUD en la entidad Realizar.
  *
+ * @author Hugo Almodóvar Fuster
  * @version 1.0
  */
 public interface RealizarDAO {

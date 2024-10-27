@@ -12,8 +12,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementación de la interfaz MesaDAO.
+ * <p>
+ * Proporciona métodos para realizar operaciones CRUD en la entidad Mesa.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
+ */
 public class MesaDAOImpl implements MesaDAO {
 
+    /**
+     * Inserta una nueva mesa en la base de datos.
+     *
+     * @param mesa El objeto Mesa a insertar.
+     * @throws DAOException Si ocurre un error durante la inserción.
+     */
     @Override
     public void insertar(Mesa mesa) throws DAOException {
         try (Connection connection = obtenerConexion();
@@ -40,6 +54,13 @@ public class MesaDAOImpl implements MesaDAO {
         }
     }
 
+    /**
+     * Obtiene una mesa por su ID.
+     *
+     * @param idMesa El ID de la mesa a obtener.
+     * @return El objeto Mesa correspondiente al ID proporcionado.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public Mesa obtenerPorID(int idMesa) throws DAOException {
         Mesa mesa = null;
@@ -61,6 +82,12 @@ public class MesaDAOImpl implements MesaDAO {
         return mesa;
     }
 
+    /**
+     * Obtiene una lista de todas las mesas.
+     *
+     * @return Una lista de objetos Mesa.
+     * @throws DAOException Si ocurre un error durante la obtención.
+     */
     @Override
     public List<Mesa> obtenerTodos() throws DAOException {
         List<Mesa> mesas = new ArrayList<>();
@@ -81,6 +108,12 @@ public class MesaDAOImpl implements MesaDAO {
         return mesas;
     }
 
+    /**
+     * Actualiza la información de una mesa existente.
+     *
+     * @param mesa El objeto Mesa con la información actualizada.
+     * @throws DAOException Si ocurre un error durante la actualización.
+     */
     @Override
     public void actualizar(Mesa mesa) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -103,6 +136,12 @@ public class MesaDAOImpl implements MesaDAO {
         }
     }
 
+    /**
+     * Elimina una mesa por su ID.
+     *
+     * @param idMesa El ID de la mesa a eliminar.
+     * @throws DAOException Si ocurre un error durante la eliminación.
+     */
     @Override
     public void eliminar(int idMesa) throws DAOException {
         try (Connection conexion = obtenerConexion();
@@ -121,11 +160,24 @@ public class MesaDAOImpl implements MesaDAO {
         }
     }
 
+    /**
+     * Obtiene una conexión a la base de datos.
+     *
+     * @return Un objeto Connection.
+     * @throws SQLException Si ocurre un error al obtener la conexión.
+     */
     public Connection obtenerConexion() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         return conexion.getConnection();
     }
 
+    /**
+     * Mapea un ResultSet a un objeto Mesa.
+     *
+     * @param rs El ResultSet a mapear.
+     * @return Un objeto Mesa.
+     * @throws SQLException Si ocurre un error durante el mapeo.
+     */
     public Mesa mappearMesa(ResultSet rs) throws SQLException {
         int idMesa = rs.getInt("ID_MESA");
         int numeroMesa = rs.getInt("NUMERO_MESA");
