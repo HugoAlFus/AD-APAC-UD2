@@ -10,15 +10,33 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con la entidad Realizar.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar registros de Realizar.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class RealizarServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(RealizarServicio.class);
     private RealizarDAO realizarDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Realizar.
+     */
     public RealizarServicio() {
         this.realizarDAO = new RealizarDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo registro de Realizar.
+     *
+     * @param idPlato ID del plato.
+     * @param idChef  ID del chef.
+     * @param fecha   Fecha de la realización.
+     */
     public void agregarRealizar(int idPlato, int idChef, LocalDate fecha) {
         Realizar realizar = new Realizar(idPlato, idChef, fecha);
 
@@ -31,6 +49,13 @@ public class RealizarServicio {
         }
     }
 
+    /**
+     * Obtiene un registro de Realizar por su ID de plato y ID de chef.
+     *
+     * @param idPlato ID del plato.
+     * @param idChef  ID del chef.
+     * @return El registro de Realizar correspondiente a los IDs proporcionados.
+     */
     public Realizar obtenerRealizar(int idPlato, int idChef) {
         try {
             return realizarDAO.obtenerPorID(idPlato, idChef);
@@ -40,6 +65,11 @@ public class RealizarServicio {
         }
     }
 
+    /**
+     * Lista todos los registros de Realizar.
+     *
+     * @return Lista de todos los registros de Realizar.
+     */
     public List<Realizar> listarRealizaciones() {
         try {
             return realizarDAO.obtenerTodos();
@@ -49,6 +79,13 @@ public class RealizarServicio {
         }
     }
 
+    /**
+     * Actualiza un registro de Realizar.
+     *
+     * @param idPlato ID del plato.
+     * @param idChef  ID del chef.
+     * @param fecha   Fecha de la realización.
+     */
     public void actualizarRealizar(int idPlato, int idChef, LocalDate fecha) {
         Realizar realizar = new Realizar(idPlato, idChef, fecha);
 
@@ -61,10 +98,16 @@ public class RealizarServicio {
         }
     }
 
+    /**
+     * Elimina un registro de Realizar por su ID de plato y ID de chef.
+     *
+     * @param idPlato ID del plato.
+     * @param idChef  ID del chef.
+     */
     public void eliminarRealizar(int idPlato, int idChef) {
         try {
             realizarDAO.eliminar(idPlato, idChef);
-            System.out.println("Realización eliminada con ID de plato: " + idPlato + " y con ID de chef: " +idChef);
+            System.out.println("Realización eliminada con ID de plato: " + idPlato + " y con ID de chef: " + idChef);
         } catch (DAOException e) {
             System.err.println("Hubo un error al intentar eliminar la realización");
             LOGGER.error("Hubo un error al eliminar la realización: {}", e.getMessage());

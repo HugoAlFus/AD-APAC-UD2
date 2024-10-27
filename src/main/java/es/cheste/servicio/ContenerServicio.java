@@ -9,15 +9,34 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con la entidad Contener.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar registros de Contener.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class ContenerServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(ContenerServicio.class);
     private ContenerDAO contenerDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Contener.
+     */
     public ContenerServicio() {
         this.contenerDAO = new ContenerDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo registro de Contener.
+     *
+     * @param idPedido ID del pedido.
+     * @param idPlato  ID del plato.
+     * @param cantidad Cantidad del plato en el pedido.
+     * @param subtotal Subtotal del plato en el pedido.
+     */
     public void agregarContener(int idPedido, int idPlato, int cantidad, double subtotal) {
         Contener contener = new Contener(idPedido, idPlato, cantidad, subtotal);
 
@@ -30,6 +49,13 @@ public class ContenerServicio {
         }
     }
 
+    /**
+     * Obtiene un registro de Contener por su ID de pedido y ID de plato.
+     *
+     * @param idPedido ID del pedido.
+     * @param idPlato  ID del plato.
+     * @return El registro de Contener correspondiente a los IDs proporcionados.
+     */
     public Contener obtenerContener(int idPedido, int idPlato) {
         try {
             return contenerDAO.obtenerPorID(idPedido, idPlato);
@@ -39,6 +65,11 @@ public class ContenerServicio {
         }
     }
 
+    /**
+     * Lista todos los registros de Contener.
+     *
+     * @return Lista de todos los registros de Contener.
+     */
     public List<Contener> listarContener() {
         try {
             return contenerDAO.obtenerTodos();
@@ -48,6 +79,14 @@ public class ContenerServicio {
         }
     }
 
+    /**
+     * Actualiza un registro de Contener.
+     *
+     * @param idPedido ID del pedido.
+     * @param idPlato  ID del plato.
+     * @param cantidad Cantidad del plato en el pedido.
+     * @param subtotal Subtotal del plato en el pedido.
+     */
     public void actualizarContener(int idPedido, int idPlato, int cantidad, double subtotal) {
         Contener contener = new Contener(idPedido, idPlato, cantidad, subtotal);
 
@@ -60,6 +99,12 @@ public class ContenerServicio {
         }
     }
 
+    /**
+     * Elimina un registro de Contener por su ID de pedido y ID de plato.
+     *
+     * @param idPedido ID del pedido.
+     * @param idPlato  ID del plato.
+     */
     public void eliminarContener(int idPedido, int idPlato) {
         try {
             contenerDAO.eliminar(idPedido, idPlato);

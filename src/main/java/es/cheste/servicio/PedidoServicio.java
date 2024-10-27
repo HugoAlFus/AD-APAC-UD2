@@ -11,15 +11,35 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con pedidos.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar pedidos.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class PedidoServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(PedidoServicio.class);
     private PedidoDAO pedidoDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Pedido.
+     */
     public PedidoServicio() {
         this.pedidoDAO = new PedidoDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo pedido.
+     *
+     * @param fechaPedido  Fecha del pedido.
+     * @param precioTotal  Precio total del pedido.
+     * @param idCliente    ID del cliente que realiza el pedido.
+     * @param idMesa       ID de la mesa asociada al pedido.
+     * @param estadoPedido Estado del pedido.
+     */
     public void agregarPedido(LocalDate fechaPedido, double precioTotal, int idCliente, int idMesa, EstadoPedido estadoPedido) {
         Pedido pedido = new Pedido(fechaPedido, precioTotal, idCliente, idMesa, estadoPedido);
 
@@ -32,6 +52,12 @@ public class PedidoServicio {
         }
     }
 
+    /**
+     * Obtiene un pedido por su ID.
+     *
+     * @param idPedido ID del pedido.
+     * @return El pedido correspondiente al ID proporcionado.
+     */
     public Pedido obtenerPedido(int idPedido) {
         try {
             return pedidoDAO.obtenerPorID(idPedido);
@@ -41,6 +67,11 @@ public class PedidoServicio {
         }
     }
 
+    /**
+     * Lista todos los pedidos.
+     *
+     * @return Lista de todos los pedidos.
+     */
     public List<Pedido> listarPedidos() {
         try {
             return pedidoDAO.obtenerTodos();
@@ -50,6 +81,16 @@ public class PedidoServicio {
         }
     }
 
+    /**
+     * Actualiza la información de un pedido.
+     *
+     * @param idPedido     ID del pedido.
+     * @param fechaPedido  Fecha del pedido.
+     * @param precioTotal  Precio total del pedido.
+     * @param idCliente    ID del cliente que realiza el pedido.
+     * @param idMesa       ID de la mesa asociada al pedido.
+     * @param estadoPedido Estado del pedido.
+     */
     public void actualizarPedido(int idPedido, LocalDate fechaPedido, double precioTotal, int idCliente, int idMesa, EstadoPedido estadoPedido) {
         Pedido pedido = new Pedido(idPedido, fechaPedido, precioTotal, idCliente, idMesa, estadoPedido);
 
@@ -62,6 +103,11 @@ public class PedidoServicio {
         }
     }
 
+    /**
+     * Elimina un pedido por su ID.
+     *
+     * @param idPedido ID del pedido.
+     */
     public void eliminarPedido(int idPedido) {
         try {
             pedidoDAO.eliminar(idPedido);

@@ -10,15 +10,34 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Servicio para gestionar operaciones relacionadas con platos.
+ * <p>
+ * Proporciona métodos para agregar, obtener, listar, actualizar y eliminar platos.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class PlatoServicio {
 
     private static final Logger LOGGER = LogManager.getLogger(PlatoServicio.class);
     private PlatoDAO platoDAO;
 
+    /**
+     * Constructor por defecto que inicializa el DAO de Plato.
+     */
     public PlatoServicio() {
         this.platoDAO = new PlatoDAOImpl();
     }
 
+    /**
+     * Agrega un nuevo plato.
+     *
+     * @param nombrePlato    Nombre del plato.
+     * @param descripcion    Descripción del plato.
+     * @param precioPlato    Precio del plato.
+     * @param categoriaPlato Categoría del plato.
+     */
     public void agregarPlato(String nombrePlato, String descripcion, double precioPlato, CategoriaPlato categoriaPlato) {
         Plato plato = new Plato(nombrePlato, descripcion, precioPlato, categoriaPlato);
 
@@ -31,6 +50,12 @@ public class PlatoServicio {
         }
     }
 
+    /**
+     * Obtiene un plato por su ID.
+     *
+     * @param idPlato ID del plato.
+     * @return El plato correspondiente al ID proporcionado.
+     */
     public Plato obtenerPlato(int idPlato) {
         try {
             return platoDAO.obtenerPorID(idPlato);
@@ -40,6 +65,11 @@ public class PlatoServicio {
         }
     }
 
+    /**
+     * Lista todos los platos.
+     *
+     * @return Lista de todos los platos.
+     */
     public List<Plato> listarPlatos() {
         try {
             return platoDAO.obtenerTodos();
@@ -49,6 +79,15 @@ public class PlatoServicio {
         }
     }
 
+    /**
+     * Actualiza la información de un plato.
+     *
+     * @param idPlato        ID del plato.
+     * @param nombrePlato    Nombre del plato.
+     * @param descripcion    Descripción del plato.
+     * @param precioPlato    Precio del plato.
+     * @param categoriaPlato Categoría del plato.
+     */
     public void actualizarPlato(int idPlato, String nombrePlato, String descripcion, double precioPlato, CategoriaPlato categoriaPlato) {
         Plato plato = new Plato(idPlato, nombrePlato, descripcion, precioPlato, categoriaPlato);
 
@@ -61,6 +100,11 @@ public class PlatoServicio {
         }
     }
 
+    /**
+     * Elimina un plato por su ID.
+     *
+     * @param idPlato ID del plato.
+     */
     public void eliminarPlato(int idPlato) {
         try {
             platoDAO.eliminar(idPlato);
