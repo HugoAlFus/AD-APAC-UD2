@@ -11,13 +11,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Clase para gestionar la conexión a la base de datos.
+ * <p>
+ * Proporciona métodos para conectar y desconectar de la base de datos,
+ * así como para obtener la conexión actual.
+ *
+ * @version 1.0
+ * @autor Hugo Almodóvar Fuster
+ */
 public class ConexionBD {
 
-    private static final Logger LOGGER = LogManager.getRootLogger();
+    private static final Logger LOGGER = LogManager.getLogger(ConexionBD.class);
     private static final String FILENAME = "src/main/resources/conexion/application.properties";
 
     private Connection connection = null;
 
+    /**
+     * Método privado para establecer la conexión a la base de datos.
+     * <p>
+     * Carga las propiedades de conexión desde un archivo y establece la conexión
+     * utilizando `DriverManager`.
+     */
     private void conectar() {
         try {
             Properties properties = new Properties();
@@ -35,6 +50,11 @@ public class ConexionBD {
         }
     }
 
+    /**
+     * Método para desconectar de la base de datos.
+     * <p>
+     * Cierra la conexión actual si está abierta.
+     */
     public void desconectar() {
         try {
             connection.close();
@@ -43,8 +63,15 @@ public class ConexionBD {
         }
     }
 
+    /**
+     * Obtiene la conexión actual a la base de datos.
+     * <p>
+     * Si no hay una conexión establecida, llama al método `conectar` para establecerla.
+     *
+     * @return La conexión actual a la base de datos.
+     */
     public Connection getConnection() {
-        if(connection == null) {
+        if (connection == null) {
             conectar();
         }
         return connection;
