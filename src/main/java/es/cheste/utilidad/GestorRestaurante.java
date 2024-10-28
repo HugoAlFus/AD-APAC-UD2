@@ -1,19 +1,13 @@
 package es.cheste.utilidad;
 
-import es.cheste.entidad.Chef;
-import es.cheste.entidad.Cliente;
-import es.cheste.entidad.Contener;
-import es.cheste.entidad.Mesa;
-import es.cheste.entidad.enums.EspecialidadChef;
-import es.cheste.entidad.enums.EstadoMesa;
-import es.cheste.entidad.enums.UbicacionMesa;
-import es.cheste.servicio.ChefServicio;
-import es.cheste.servicio.ClienteServicio;
-import es.cheste.servicio.ContenerServicio;
-import es.cheste.servicio.MesaServicio;
+import es.cheste.entidad.*;
+import es.cheste.entidad.enums.*;
+import es.cheste.servicio.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,266 +28,296 @@ public class GestorRestaurante {
     }
 
     public void iniciarGestorRestaurante() {
-
         if (!estaIniciado) {
             System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
             return;
         }
         while (!seSale) {
             int numTabla = seleccionarOpcion();
-            if (numTabla == 9) {
-                System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
-                seSale = Boolean.TRUE;
-                sc.close();
+            if (numTabla == 9 || numTabla == 0) {
+                mostrarMensajeSalida(numTabla);
                 break;
             }
-
-            if (numTabla == 0) {
-                System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
-                seSale = Boolean.TRUE;
-                sc.close();
-                break;
-            }
-
             if (numTabla != 8) {
                 int sentencia = seleccionarSentencia();
-                if (sentencia == 6) {
-                    System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
-                    seSale = Boolean.TRUE;
-                    sc.close();
+                if (sentencia == 6 || sentencia == 0) {
+                    mostrarMensajeSalida(sentencia);
                     break;
                 }
-
-                if (sentencia == 0) {
-                    System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
-                    seSale = Boolean.TRUE;
-                    sc.close();
-                    break;
-                }
-
                 ejecutarSentenciaTabla(numTabla, sentencia);
             }
         }
     }
 
     private int seleccionarOpcion() {
+        return seleccionarValor("iniciar.seleccionar.opcion", 1, 9);
+    }
 
-        int opcion;
+    private int seleccionarSentencia() {
+        return seleccionarValor("iniciar.seleccionar.sentencia", 1, 6);
+    }
 
+    private int seleccionarValor(String mensaje, int min, int max) {
+        int valor;
         do {
-            System.out.println(Mensajes.getMensaje("iniciar.seleccionar.opcion"));
+            System.out.println(Mensajes.getMensaje(mensaje));
             try {
-                opcion = sc.nextInt();
-
-                if (opcion <= 0 || opcion > 9) {
+                valor = sc.nextInt();
+                if (valor < min || valor > max) {
                     System.out.println(Mensajes.getMensaje("error.valor.valido"));
                 }
                 sc.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                opcion = 0;
+                valor = 0;
                 sc.nextLine();
             } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al insertar la opcion de tabla {}", e.getMessage());
+                LOGGER.error("Error al insertar valor: {}", e.getMessage());
                 return 0;
             }
-        } while (opcion <= 0 || opcion > 9);
-
-        return opcion;
+        } while (valor < min || valor > max);
+        return valor;
     }
 
     private void ejecutarSentenciaTabla(int numTabla, int numSentencia) {
-
         switch (numTabla) {
-            case 1:
-                ejecutarSentenciaChef(numSentencia);
-                break;
-            case 2:
-                ejecutarSentenciasClientes(numSentencia);
-                break;
-            case 3:
-                ejecutarSentenciasContener(numSentencia);
-                break;
-            case 4:
-                ejecutarSentenciasMesa(numSentencia);
-                break;
-            case 5:
-                break;
-            case 6:
-                System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
-                seSale = Boolean.TRUE;
-                sc.close();
-                break;
-            default:
-                mostrarError("iniciar.salida.error");
+            case 1 -> ejecutarSentenciaChef(numSentencia);
+            case 2 -> ejecutarSentenciasClientes(numSentencia);
+            case 3 -> ejecutarSentenciasContener(numSentencia);
+            case 4 -> ejecutarSentenciasMesa(numSentencia);
+            case 5 -> ejecutarSentenciasPedido(numSentencia);
+            case 6 -> ejecutarSentenciasPlato(numSentencia);
+            default -> ejecutarSentenciasRealizar(numSentencia);
         }
-
     }
 
     private void ejecutarSentenciaChef(int sentencia) {
         ChefServicio servicio = new ChefServicio();
-        int id;
-        String nombre;
-        EspecialidadChef especialidad;
-        int experiencia;
-        String telefono;
-        boolean disponibilidad;
-
         switch (sentencia) {
-            case 1:
-                nombre = obtenerNombre();
-                especialidad = obtenerEspecialidadChef();
-                experiencia = obtenerExperienciaChef();
-                telefono = obtenerTelefono();
-                disponibilidad = obtenerDisponibilidadChef();
-
-                if (nombre != null && especialidad != null && experiencia != -1 && telefono != null) {
-                    servicio.agregarChef(nombre, especialidad, experiencia, telefono, disponibilidad);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 2:
-                id = obtenerID(TABLAS[1]);
-                if (id != -1) {
-                    System.out.println(servicio.obtenerChef(id));
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 3:
-                List<Chef> listaChefs = servicio.lsitarChefs();
-                listaChefs.forEach(System.out::println);
-                break;
-            case 4:
-                id = obtenerID(TABLAS[1]);
-                nombre = obtenerNombre();
-                especialidad = obtenerEspecialidadChef();
-                experiencia = obtenerExperienciaChef();
-                telefono = obtenerTelefono();
-                disponibilidad = obtenerDisponibilidadChef();
-
-                if (id != -1 && nombre != null && especialidad != null && experiencia != -1 && telefono != null) {
-                    servicio.actualizarChef(id, nombre, especialidad, experiencia, telefono, disponibilidad);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            default:
-                id = obtenerID(TABLAS[1]);
-                if (id != -1) {
-                    servicio.eliminarChef(id);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
+            case 1 -> servicio.agregarChef(obtenerNombre(), obtenerEspecialidadChef(), obtenerExperienciaChef(), obtenerTelefono(), obtenerDisponibilidadChef());
+            case 2 -> System.out.println(servicio.obtenerChef(obtenerID(TABLAS[1])));
+            case 3 -> servicio.lsitarChefs().forEach(System.out::println);
+            case 4 -> servicio.actualizarChef(obtenerID(TABLAS[1]), obtenerNombre(), obtenerEspecialidadChef(), obtenerExperienciaChef(), obtenerTelefono(), obtenerDisponibilidadChef());
+            default -> servicio.eliminarChef(obtenerID(TABLAS[1]));
         }
     }
 
-    private int seleccionarSentencia() {
-        int opcion;
+    private void ejecutarSentenciasClientes(int sentencia) {
+        ClienteServicio servicio = new ClienteServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarCliente(obtenerNombre(), obtenerTelefono(), obtenerCorreoElectronico(), obtenerDireccion());
+            case 2 -> System.out.println(servicio.obtenerCliente(obtenerID(TABLAS[2])));
+            case 3 -> servicio.listarClientes().forEach(System.out::println);
+            case 4 -> servicio.actualizarCliente(obtenerID(TABLAS[2]), obtenerNombre(), obtenerTelefono(), obtenerCorreoElectronico(), obtenerDireccion());
+            default -> servicio.eliminarCliente(obtenerID(TABLAS[2]));
+        }
+    }
 
-        do {
-            System.out.println(Mensajes.getMensaje("iniciar.seleccionar.sentencia"));
-            try {
-                opcion = sc.nextInt();
+    private void ejecutarSentenciasContener(int sentencia) {
+        ContenerServicio servicio = new ContenerServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarContener(obtenerID(TABLAS[4]), obtenerID(TABLAS[0]), obtenerCantidad(), obtenerSubtotal());
+            case 2 -> System.out.println(servicio.obtenerContener(obtenerID(TABLAS[4]), obtenerID(TABLAS[0])));
+            case 3 -> servicio.listarContener().forEach(System.out::println);
+            case 4 -> servicio.actualizarContener(obtenerID(TABLAS[4]), obtenerID(TABLAS[0]), obtenerCantidad(), obtenerSubtotal());
+            default -> servicio.eliminarContener(obtenerID(TABLAS[4]), obtenerID(TABLAS[0]));
+        }
+    }
 
-                if (opcion <= 0 || opcion > 6) {
-                    System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                }
-                sc.nextLine();
+    private void ejecutarSentenciasMesa(int sentencia) {
+        MesaServicio servicio = new MesaServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarMesa(obtenerNumeroMesa(), obtenerCapacidadMesa(), obtenerUbicacionMesa(), obtenerEstadoMesa());
+            case 2 -> System.out.println(servicio.obtenerMesa(obtenerID(TABLAS[3])));
+            case 3 -> servicio.listarMesas().forEach(System.out::println);
+            case 4 -> servicio.actualizarMesa(obtenerID(TABLAS[3]), obtenerNumeroMesa(), obtenerCapacidadMesa(), obtenerUbicacionMesa(), obtenerEstadoMesa());
+            default -> servicio.eliminarMesa(obtenerID(TABLAS[3]));
+        }
+    }
 
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                opcion = 0;
-                sc.nextLine();
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al insertar la opcion de la sentencia {}", e.getMessage());
-                return 0;
-            }
-        } while (opcion <= 0 || opcion > 6);
+    private void ejecutarSentenciasPedido(int sentencia) {
+        PedidoServicio servicio = new PedidoServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarPedido(obtenerFecha(), obtenerPrecioTotal(), obtenerID(TABLAS[2]), obtenerID(TABLAS[3]), obtenerEstadoPedido());
+            case 2 -> System.out.println(servicio.obtenerPedido(obtenerID(TABLAS[4])));
+            case 3 -> servicio.listarPedidos().forEach(System.out::println);
+            case 4 -> servicio.actualizarPedido(obtenerID(TABLAS[4]), obtenerFecha(), obtenerPrecioTotal(), obtenerID(TABLAS[2]), obtenerID(TABLAS[3]), obtenerEstadoPedido());
+            default -> servicio.eliminarPedido(obtenerID(TABLAS[4]));
+        }
+    }
 
-        return opcion;
+    private void ejecutarSentenciasPlato(int sentencia) {
+        PlatoServicio servicio = new PlatoServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarPlato(obtenerNombre(), obtenerDescripcionPlato(), obtenerPrecioPlato(), obtenerCategoriaPlato());
+            case 2 -> System.out.println(servicio.obtenerPlato(obtenerID(TABLAS[0])));
+            case 3 -> servicio.listarPlatos().forEach(System.out::println);
+            case 4 -> servicio.actualizarPlato(obtenerID(TABLAS[0]), obtenerNombre(), obtenerDescripcionPlato(), obtenerPrecioPlato(), obtenerCategoriaPlato());
+            default -> servicio.eliminarPlato(obtenerID(TABLAS[0]));
+        }
+    }
+
+    private void ejecutarSentenciasRealizar(int sentencia) {
+        RealizarServicio servicio = new RealizarServicio();
+        switch (sentencia) {
+            case 1 -> servicio.agregarRealizar(obtenerID(TABLAS[0]), obtenerID(TABLAS[1]), obtenerFecha());
+            case 2 -> System.out.println(servicio.obtenerRealizar(obtenerID(TABLAS[0]), obtenerID(TABLAS[1])));
+            case 3 -> servicio.listarRealizaciones().forEach(System.out::println);
+            case 4 -> servicio.actualizarRealizar(obtenerID(TABLAS[0]), obtenerID(TABLAS[1]), obtenerFecha());
+            default -> servicio.eliminarRealizar(obtenerID(TABLAS[0]), obtenerID(TABLAS[1]));
+        }
     }
 
     private int obtenerID(String tabla) {
-        int ID;
-        do {
-            try {
-                System.out.println(Mensajes.getMensaje("insertar.ID") + tabla);
-                ID = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                ID = -1;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener el ID {}", e.getMessage());
-                return -1;
-            }
-        } while (ID < 0);
-        return ID;
-
+        return obtenerValor("insertar.ID" + tabla, 0);
     }
 
-    private String obtenerNombre() {
-        String nombre;
-        try {
-            System.out.println(Mensajes.getMensaje("insertar.nombre"));
-            nombre = sc.nextLine();
-        } catch (NoSuchElementException | IllegalArgumentException e) {
-            LOGGER.error("Hubo un error al obetner el nombre {}", e.getMessage());
-            return null;
-        }
-        return nombre;
+    private int obtenerNumeroMesa() {
+        return obtenerValor("insertar.numero.mesa", 1);
     }
 
-    private EspecialidadChef obtenerEspecialidadChef() {
-        int opcion;
+    private int obtenerCapacidadMesa() {
+        return obtenerValor("insertar.capacidad.mesa", 1);
+    }
 
-        do {
-            System.out.println(Mensajes.getMensaje("insertar.especialidad.chef"));
-            try {
-                opcion = sc.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                opcion = 0;
-                sc.nextLine();
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la especialiad del chef {}", e.getMessage());
-                return null;
-            }
-        } while (opcion < 1 || opcion > 10);
-        return EspecialidadChef.values()[opcion - 1];
+    private int obtenerCantidad() {
+        return obtenerValor("insertar.cantidad", 1);
     }
 
     private int obtenerExperienciaChef() {
-        int experiencia;
+        return obtenerValor("insertar.experiencia.chef", 0);
+    }
+
+    private double obtenerSubtotal() {
+        return obtenerValorDouble("insertar.subtotal", 0);
+    }
+
+    private double obtenerPrecioTotal() {
+        return obtenerValorDouble("insertar.precio.total", 0);
+    }
+
+    private double obtenerPrecioPlato(){
+        return obtenerValorDouble("insertar.precio.plato",0);
+    }
+
+    private int obtenerValor(String mensaje, int min) {
+        int valor;
         do {
             try {
-                System.out.println(Mensajes.getMensaje("insertar.experiencia.chef"));
-                experiencia = sc.nextInt();
+                System.out.println(Mensajes.getMensaje(mensaje));
+                valor = sc.nextInt();
+                sc.nextLine();
             } catch (InputMismatchException e) {
                 System.out.println(Mensajes.getMensaje("error.valor.valido"));
                 sc.nextLine();
-                experiencia = -1;
+                valor = -1;
             } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la experiencia del chef {}", e.getMessage());
+                LOGGER.error("Error al obtener valor: {}", e.getMessage());
                 return -1;
             }
-        } while (experiencia < 0);
-        return experiencia;
+        } while (valor < min);
+        return valor;
+    }
+
+    private double obtenerValorDouble(String mensaje, double min) {
+        double valor;
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje(mensaje));
+                valor = sc.nextDouble();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                valor = -1;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Error al obtener valor: {}", e.getMessage());
+                return -1;
+            }
+        } while (valor < min);
+        return valor;
+    }
+
+    private String obtenerNombre() {
+        return obtenerTexto("insertar.nombre");
     }
 
     private String obtenerTelefono() {
-        String telefono;
+        return obtenerTexto("insertar.telefono");
+    }
+
+    private String obtenerCorreoElectronico() {
+        return obtenerTexto("insertar.correo.electronico");
+    }
+
+    private String obtenerDireccion() {
+        return obtenerTexto("insertar.direccion");
+    }
+
+    private String obtenerDescripcionPlato() {
+        return obtenerTexto("insertar.descripcion.plato");
+    }
+
+    private String obtenerTexto(String mensaje) {
         try {
-            System.out.println(Mensajes.getMensaje("insertar.telefono"));
-            telefono = sc.next();
+            System.out.println(Mensajes.getMensaje(mensaje));
+            return sc.nextLine();
         } catch (NoSuchElementException | IllegalArgumentException e) {
-            LOGGER.error("Hubo un error al obtener el teléfono {}", e.getMessage());
+            LOGGER.error("Error al obtener texto: {}", e.getMessage());
             return null;
         }
-        return telefono;
+    }
+
+    private EspecialidadChef obtenerEspecialidadChef() {
+        return obtenerEnum("insertar.especialidad.chef", EspecialidadChef.values());
+    }
+
+    private UbicacionMesa obtenerUbicacionMesa() {
+        return obtenerEnum("insertar.ubicacion.mesa", UbicacionMesa.values());
+    }
+
+    private EstadoMesa obtenerEstadoMesa() {
+        return obtenerEnum("insertar.estado.mesa", EstadoMesa.values());
+    }
+
+    private EstadoPedido obtenerEstadoPedido() {
+        return obtenerEnum("insertar.estado.pedido", EstadoPedido.values());
+    }
+
+    private CategoriaPlato obtenerCategoriaPlato() {
+        return obtenerEnum("insertar.categoria.plato", CategoriaPlato.values());
+    }
+
+    private <T extends Enum<T>> T obtenerEnum(String mensaje, T[] valores) {
+        int opcion;
+        do {
+            System.out.println(Mensajes.getMensaje(mensaje));
+            try {
+                opcion = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                opcion = 0;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Error al obtener opción enum {}", e.getMessage());
+                return null;
+            }
+        } while (opcion < 1 || opcion > valores.length);
+        return valores[opcion - 1];
+    }
+
+    private LocalDate obtenerFecha() {
+        try {
+            System.out.println(Mensajes.getMensaje("insertar.fecha"));
+            return LocalDate.parse(sc.nextLine());
+        } catch (DateTimeParseException e) {
+            System.out.println(Mensajes.getMensaje("error.valor.valido"));
+            return null;
+        } catch (NoSuchElementException | IllegalArgumentException e) {
+            LOGGER.error("Error al obtener fecha: {}", e.getMessage());
+            return null;
+        }
     }
 
     private boolean obtenerDisponibilidadChef() {
@@ -303,324 +327,23 @@ public class GestorRestaurante {
                 System.out.println(Mensajes.getMensaje("insertar.disponibilidad.chef"));
                 respuesta = sc.next().toLowerCase().charAt(0);
             } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la disponibilidad del chef {}", e.getMessage());
-                return false;
+                LOGGER.error("Error al obtener disponibilidad: {}", e.getMessage());
+                return Boolean.FALSE;
             }
         } while (respuesta != 's' && respuesta != 'n');
         return respuesta == 's';
     }
 
-    private void ejecutarSentenciasClientes(int sentencia) {
-        ClienteServicio servicio = new ClienteServicio();
-        int id;
-        String nombre;
-        String telefono;
-        String correoElectronico;
-        String direccion;
-
-        switch (sentencia) {
-            case 1:
-                nombre = obtenerNombre();
-                telefono = obtenerTelefono();
-                correoElectronico = obtenerCorreoElectronico();
-                direccion = obtenerDireccion();
-
-                if (nombre != null && telefono != null && correoElectronico != null && direccion != null) {
-                    servicio.agregarCliente(nombre, telefono, correoElectronico, direccion);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 2:
-                id = obtenerID(TABLAS[2]);
-                if (id != -1) {
-                    System.out.println(servicio.obtenerCliente(id));
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 3:
-                List<Cliente> listaClientes = servicio.listarClientes();
-                listaClientes.forEach(System.out::println);
-                break;
-            case 4:
-                id = obtenerID(TABLAS[2]);
-                nombre = obtenerNombre();
-                telefono = obtenerTelefono();
-                correoElectronico = obtenerCorreoElectronico();
-                direccion = obtenerDireccion();
-
-                if (id != -1 && nombre != null && telefono != null && correoElectronico != null && direccion != null) {
-                    servicio.actualizarCliente(id, nombre, telefono, correoElectronico, direccion);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            default:
-                id = obtenerID("Cliente");
-                if (id != -1) {
-                    servicio.eliminarCliente(id);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
+    private void mostrarMensajeSalida(int opcion) {
+        if (opcion == 9 || opcion == 6) {
+            System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
+        } else {
+            System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
         }
-    }
-
-    private String obtenerCorreoElectronico() {
-        String correoElectronico;
-        try {
-            System.out.println(Mensajes.getMensaje("insertar.correo.electronico"));
-            correoElectronico = sc.nextLine();
-        } catch (NoSuchElementException | IllegalArgumentException e) {
-            LOGGER.error("Hubo un error al obtener el correo electrónico {}", e.getMessage());
-            return null;
-        }
-        return correoElectronico;
-    }
-
-    private String obtenerDireccion() {
-        String direccion;
-        try {
-            System.out.println(Mensajes.getMensaje("insertar.direccion"));
-            direccion = sc.nextLine();
-        } catch (NoSuchElementException | IllegalArgumentException e) {
-            LOGGER.error("Hubo un error al obtener la dirección {}", e.getMessage());
-            return null;
-        }
-        return direccion;
-    }
-
-    private void ejecutarSentenciasContener(int sentencia) {
-        ContenerServicio servicio = new ContenerServicio();
-        int pedidoId;
-        int platoId;
-        int cantidad;
-        double subtotal;
-
-        switch (sentencia) {
-            case 1:
-                pedidoId = obtenerID(TABLAS[4]);
-                platoId = obtenerID(TABLAS[0]);
-                cantidad = obtenerCantidad();
-                subtotal = obtenerSubtotal();
-
-                if (pedidoId != -1 && platoId != -1 && cantidad >= 0) {
-                    servicio.agregarContener(pedidoId, platoId, cantidad, subtotal);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 2:
-                pedidoId = obtenerID(TABLAS[4]);
-                platoId = obtenerID(TABLAS[0]);
-                if (pedidoId != -1 && platoId != -1) {
-                    System.out.println(servicio.obtenerContener(pedidoId, platoId));
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 3:
-                List<Contener> listaContener = servicio.listarContener();
-                listaContener.forEach(System.out::println);
-                break;
-            case 4:
-                pedidoId = obtenerID(TABLAS[4]);
-                platoId = obtenerID(TABLAS[0]);
-                cantidad = obtenerCantidad();
-                subtotal = obtenerSubtotal();
-
-                if (pedidoId != -1 && platoId != -1 && cantidad > 0) {
-                    servicio.actualizarContener(pedidoId, platoId, cantidad, subtotal);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            default:
-                pedidoId = obtenerID(TABLAS[4]);
-                platoId = obtenerID(TABLAS[0]);
-
-                if (pedidoId != -1 && platoId != -1) {
-                    servicio.eliminarContener(pedidoId, platoId);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-        }
-    }
-
-    private int obtenerCantidad() {
-        int cantidad;
-        do {
-            try {
-                System.out.println(Mensajes.getMensaje("insertar.cantidad"));
-                cantidad = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                cantidad = -1;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la cantidad {}", e.getMessage());
-                return -1;
-            }
-        } while (cantidad <= 0);
-        return cantidad;
-    }
-
-    private double obtenerSubtotal() {
-        double subtotal;
-        do {
-            try {
-                System.out.println(Mensajes.getMensaje("insertar.subtotal"));
-                subtotal = sc.nextDouble();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                subtotal = -1;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener el subtotal {}", e.getMessage());
-                return -1;
-            }
-        } while (subtotal < 0);
-        return subtotal;
-    }
-
-    private void ejecutarSentenciasMesa(int sentencia) {
-        MesaServicio servicio = new MesaServicio();
-        int id;
-        int numero;
-        int capacidad;
-        UbicacionMesa ubicacion;
-        EstadoMesa estado;
-
-        switch (sentencia) {
-            case 1:
-                numero = obtenerNumeroMesa();
-                capacidad = obtenerCapacidadMesa();
-                ubicacion = obtenerUbicacionMesa();
-                estado = obtenerEstadoMesa();
-
-                if (numero != -1 && capacidad != -1 && ubicacion != null && estado != null) {
-                    servicio.agregarMesa(numero, capacidad, ubicacion, estado);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 2:
-                id = obtenerID(TABLAS[3]);
-                if (id != -1) {
-                    System.out.println(servicio.obtenerMesa(id));
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            case 3:
-                List<Mesa> listaMesas = servicio.listarMesas();
-                listaMesas.forEach(System.out::println);
-                break;
-            case 4:
-                id = obtenerID(TABLAS[3]);
-                numero = obtenerNumeroMesa();
-                capacidad = obtenerCapacidadMesa();
-                ubicacion = obtenerUbicacionMesa();
-                estado = obtenerEstadoMesa();
-
-                if (id != -1 && numero != -1 && capacidad != -1 && ubicacion != null && estado != null) {
-                    servicio.actualizarMesa(id, numero, capacidad, ubicacion, estado);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-                break;
-            default:
-                id = obtenerID(TABLAS[3]);
-                if (id != -1) {
-                    servicio.eliminarMesa(id);
-                } else {
-                    mostrarError("iniciar.salida.error");
-                }
-        }
-    }
-
-    private int obtenerNumeroMesa() {
-        int numero;
-        do {
-            try {
-                System.out.println(Mensajes.getMensaje("insertar.numero.mesa"));
-                numero = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                numero = -1;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener el número de la mesa {}", e.getMessage());
-                return -1;
-            }
-        } while (numero <= 0);
-        return numero;
-    }
-
-    private int obtenerCapacidadMesa() {
-        int capacidad;
-        do {
-            try {
-                System.out.println(Mensajes.getMensaje("insertar.capacidad.mesa"));
-                capacidad = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                capacidad = -1;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la capacidad de la mesa {}", e.getMessage());
-                return -1;
-            }
-        } while (capacidad <= 0);
-        return capacidad;
-    }
-
-    private UbicacionMesa obtenerUbicacionMesa() {
-        int opcion;
-        do {
-            System.out.println(Mensajes.getMensaje("insertar.ubicacion.mesa"));
-            try {
-                opcion = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                opcion = 0;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener la ubicación de la mesa {}", e.getMessage());
-                return null;
-            }
-        } while (opcion < 1 || opcion > UbicacionMesa.values().length);
-        return UbicacionMesa.values()[opcion - 1];
-    }
-
-    private EstadoMesa obtenerEstadoMesa() {
-        int opcion;
-        do {
-            System.out.println(Mensajes.getMensaje("insertar.estado.mesa"));
-            try {
-                opcion = sc.nextInt();
-                sc.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println(Mensajes.getMensaje("error.valor.valido"));
-                sc.nextLine();
-                opcion = 0;
-            } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Hubo un error al obtener el estado de la mesa {}", e.getMessage());
-                return null;
-            }
-        } while (opcion < 1 || opcion > EstadoMesa.values().length);
-        return EstadoMesa.values()[opcion - 1];
-    }
-
-    private void mostrarError(String key) {
-        System.err.println(Mensajes.getMensaje(key));
         seSale = Boolean.TRUE;
         sc.close();
     }
+
+
 
 }
