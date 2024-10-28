@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -80,6 +79,17 @@ public class GestorRestaurante {
     }
 
     private void ejecutarSentenciaCompleja(){
+
+        int opcion = seleccionarValor("iniciar.seleccionar.sentencia.compleja",1,3);
+        switch (opcion){
+            case 1 -> SentenciasComplejas.ejecutarCalcularTotalGasto();
+            case 2 ->{
+                LocalDate fechaInicio = obtenerFecha();
+                LocalDate fechaFin = obtenerFecha();
+                SentenciasComplejas.ejecutarMostrarDetallesPedidos(fechaInicio,fechaFin);
+            }
+            case 3 ->mostrarMensajeSalida(3);
+        }
 
     }
 
@@ -339,7 +349,7 @@ public class GestorRestaurante {
     }
 
     private void mostrarMensajeSalida(int opcion) {
-        if (opcion == 9 || opcion == 6) {
+        if (opcion == 9 || opcion == 6 || opcion == 3) {
             System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
         } else {
             System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
