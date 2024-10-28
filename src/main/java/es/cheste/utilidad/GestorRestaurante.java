@@ -2,14 +2,22 @@ package es.cheste.utilidad;
 
 import es.cheste.entidad.Chef;
 import es.cheste.entidad.Cliente;
+import es.cheste.entidad.Contener;
+import es.cheste.entidad.Mesa;
 import es.cheste.entidad.enums.EspecialidadChef;
+import es.cheste.entidad.enums.EstadoMesa;
+import es.cheste.entidad.enums.UbicacionMesa;
 import es.cheste.servicio.ChefServicio;
 import es.cheste.servicio.ClienteServicio;
 import es.cheste.servicio.ContenerServicio;
+import es.cheste.servicio.MesaServicio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class GestorRestaurante {
 
@@ -104,8 +112,10 @@ public class GestorRestaurante {
                 ejecutarSentenciasClientes(numSentencia);
                 break;
             case 3:
+                ejecutarSentenciasContener(numSentencia);
                 break;
             case 4:
+                ejecutarSentenciasMesa(numSentencia);
                 break;
             case 5:
                 break;
@@ -144,7 +154,7 @@ public class GestorRestaurante {
                 }
                 break;
             case 2:
-                id = obtenerID(TABLAS[2]);
+                id = obtenerID(TABLAS[1]);
                 if (id != -1) {
                     System.out.println(servicio.obtenerChef(id));
                 } else {
@@ -156,7 +166,7 @@ public class GestorRestaurante {
                 listaChefs.forEach(System.out::println);
                 break;
             case 4:
-                id = obtenerID(TABLA);
+                id = obtenerID(TABLAS[1]);
                 nombre = obtenerNombre();
                 especialidad = obtenerEspecialidadChef();
                 experiencia = obtenerExperienciaChef();
@@ -170,7 +180,7 @@ public class GestorRestaurante {
                 }
                 break;
             default:
-                id = obtenerID(TABLA);
+                id = obtenerID(TABLAS[1]);
                 if (id != -1) {
                     servicio.eliminarChef(id);
                 } else {
@@ -224,7 +234,6 @@ public class GestorRestaurante {
         return ID;
 
     }
-
 
     private String obtenerNombre() {
         String nombre;
@@ -323,7 +332,7 @@ public class GestorRestaurante {
                 }
                 break;
             case 2:
-                id = obtenerID("Cliente");
+                id = obtenerID(TABLAS[2]);
                 if (id != -1) {
                     System.out.println(servicio.obtenerCliente(id));
                 } else {
@@ -335,7 +344,7 @@ public class GestorRestaurante {
                 listaClientes.forEach(System.out::println);
                 break;
             case 4:
-                id = obtenerID("Cliente");
+                id = obtenerID(TABLAS[2]);
                 nombre = obtenerNombre();
                 telefono = obtenerTelefono();
                 correoElectronico = obtenerCorreoElectronico();
@@ -386,23 +395,26 @@ public class GestorRestaurante {
         int pedidoId;
         int platoId;
         int cantidad;
+        double subtotal;
 
         switch (sentencia) {
             case 1:
-                pedidoId = obtenerPedidoId();
-                platoId = obtenerPlatoId();
+                pedidoId = obtenerID(TABLAS[4]);
+                platoId = obtenerID(TABLAS[0]);
                 cantidad = obtenerCantidad();
+                subtotal = obtenerSubtotal();
 
-                if (pedidoId != -1 && platoId != -1 && cantidad > 0) {
-                    servicio.agregarContener(pedidoId, platoId, cantidad);
+                if (pedidoId != -1 && platoId != -1 && cantidad >= 0) {
+                    servicio.agregarContener(pedidoId, platoId, cantidad, subtotal);
                 } else {
                     mostrarError("iniciar.salida.error");
                 }
                 break;
             case 2:
-                id = obtenerID();
-                if (id != -1) {
-                    System.out.println(servicio.obtenerContener(id));
+                pedidoId = obtenerID(TABLAS[4]);
+                platoId = obtenerID(TABLAS[0]);
+                if (pedidoId != -1 && platoId != -1) {
+                    System.out.println(servicio.obtenerContener(pedidoId, platoId));
                 } else {
                     mostrarError("iniciar.salida.error");
                 }
@@ -412,28 +424,198 @@ public class GestorRestaurante {
                 listaContener.forEach(System.out::println);
                 break;
             case 4:
-                id = obtenerID();
-                pedidoId = obtenerPedidoId();
-                platoId = obtenerPlatoId();
+                pedidoId = obtenerID(TABLAS[4]);
+                platoId = obtenerID(TABLAS[0]);
                 cantidad = obtenerCantidad();
+                subtotal = obtenerSubtotal();
 
-                if (id != -1 && pedidoId != -1 && platoId != -1 && cantidad > 0) {
-                    servicio.actualizarContener(id, pedidoId, platoId, cantidad);
+                if (pedidoId != -1 && platoId != -1 && cantidad > 0) {
+                    servicio.actualizarContener(pedidoId, platoId, cantidad, subtotal);
                 } else {
                     mostrarError("iniciar.salida.error");
                 }
                 break;
             default:
-                id = obtenerID();
-                if (id != -1) {
-                    servicio.eliminarContener(id);
+                pedidoId = obtenerID(TABLAS[4]);
+                platoId = obtenerID(TABLAS[0]);
+
+                if (pedidoId != -1 && platoId != -1) {
+                    servicio.eliminarContener(pedidoId, platoId);
                 } else {
                     mostrarError("iniciar.salida.error");
                 }
         }
     }
 
+    private int obtenerCantidad() {
+        int cantidad;
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje("insertar.cantidad"));
+                cantidad = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                cantidad = -1;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener la cantidad {}", e.getMessage());
+                return -1;
+            }
+        } while (cantidad <= 0);
+        return cantidad;
+    }
 
+    private double obtenerSubtotal() {
+        double subtotal;
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje("insertar.subtotal"));
+                subtotal = sc.nextDouble();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                subtotal = -1;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener el subtotal {}", e.getMessage());
+                return -1;
+            }
+        } while (subtotal < 0);
+        return subtotal;
+    }
+
+    private void ejecutarSentenciasMesa(int sentencia) {
+        MesaServicio servicio = new MesaServicio();
+        int id;
+        int numero;
+        int capacidad;
+        UbicacionMesa ubicacion;
+        EstadoMesa estado;
+
+        switch (sentencia) {
+            case 1:
+                numero = obtenerNumeroMesa();
+                capacidad = obtenerCapacidadMesa();
+                ubicacion = obtenerUbicacionMesa();
+                estado = obtenerEstadoMesa();
+
+                if (numero != -1 && capacidad != -1 && ubicacion != null && estado != null) {
+                    servicio.agregarMesa(numero, capacidad, ubicacion, estado);
+                } else {
+                    mostrarError("iniciar.salida.error");
+                }
+                break;
+            case 2:
+                id = obtenerID(TABLAS[3]);
+                if (id != -1) {
+                    System.out.println(servicio.obtenerMesa(id));
+                } else {
+                    mostrarError("iniciar.salida.error");
+                }
+                break;
+            case 3:
+                List<Mesa> listaMesas = servicio.listarMesas();
+                listaMesas.forEach(System.out::println);
+                break;
+            case 4:
+                id = obtenerID(TABLAS[3]);
+                numero = obtenerNumeroMesa();
+                capacidad = obtenerCapacidadMesa();
+                ubicacion = obtenerUbicacionMesa();
+                estado = obtenerEstadoMesa();
+
+                if (id != -1 && numero != -1 && capacidad != -1 && ubicacion != null && estado != null) {
+                    servicio.actualizarMesa(id, numero, capacidad, ubicacion, estado);
+                } else {
+                    mostrarError("iniciar.salida.error");
+                }
+                break;
+            default:
+                id = obtenerID(TABLAS[3]);
+                if (id != -1) {
+                    servicio.eliminarMesa(id);
+                } else {
+                    mostrarError("iniciar.salida.error");
+                }
+        }
+    }
+
+    private int obtenerNumeroMesa() {
+        int numero;
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje("insertar.numero.mesa"));
+                numero = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                numero = -1;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener el número de la mesa {}", e.getMessage());
+                return -1;
+            }
+        } while (numero <= 0);
+        return numero;
+    }
+
+    private int obtenerCapacidadMesa() {
+        int capacidad;
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje("insertar.capacidad.mesa"));
+                capacidad = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                capacidad = -1;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener la capacidad de la mesa {}", e.getMessage());
+                return -1;
+            }
+        } while (capacidad <= 0);
+        return capacidad;
+    }
+
+    private UbicacionMesa obtenerUbicacionMesa() {
+        int opcion;
+        do {
+            System.out.println(Mensajes.getMensaje("insertar.ubicacion.mesa"));
+            try {
+                opcion = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                opcion = 0;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener la ubicación de la mesa {}", e.getMessage());
+                return null;
+            }
+        } while (opcion < 1 || opcion > UbicacionMesa.values().length);
+        return UbicacionMesa.values()[opcion - 1];
+    }
+
+    private EstadoMesa obtenerEstadoMesa() {
+        int opcion;
+        do {
+            System.out.println(Mensajes.getMensaje("insertar.estado.mesa"));
+            try {
+                opcion = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                sc.nextLine();
+                opcion = 0;
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Hubo un error al obtener el estado de la mesa {}", e.getMessage());
+                return null;
+            }
+        } while (opcion < 1 || opcion > EstadoMesa.values().length);
+        return EstadoMesa.values()[opcion - 1];
+    }
 
     private void mostrarError(String key) {
         System.err.println(Mensajes.getMensaje(key));

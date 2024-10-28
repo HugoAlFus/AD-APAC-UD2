@@ -91,7 +91,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
 
         try (Connection conexion = obtenerConexion();
-             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obetner.todos.cliente"));
+             PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("obtener.todos.cliente"));
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
