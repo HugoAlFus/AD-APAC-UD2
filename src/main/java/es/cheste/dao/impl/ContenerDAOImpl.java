@@ -118,9 +118,10 @@ public class ContenerDAOImpl implements ContenerDAO {
              PreparedStatement ps = conexion.prepareStatement(SentenciasSQL.getSentencia("actualizar.contener"))) {
 
             ps.setInt(1, contener.getCantidad());
-            ps.setInt(2, contener.getIdPedido());
-            ps.setDouble(3, contener.getSubtotal());
+            ps.setDouble(2, contener.getSubtotal());
+            ps.setInt(3, contener.getIdPedido());
             ps.setInt(4, contener.getIdPlato());
+
 
             int filasAfectadas = ps.executeUpdate();
 

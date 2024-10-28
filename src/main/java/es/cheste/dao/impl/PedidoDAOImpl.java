@@ -36,7 +36,7 @@ public class PedidoDAOImpl implements PedidoDAO {
             ps.setDate(1, Date.valueOf(pedido.getFechaPedido()));
             ps.setDouble(2, pedido.getPrecioTotal());
             ps.setString(3, String.valueOf(pedido.getEstadoPedido()));
-            ps.setInt(4, pedido.getIdPedido());
+            ps.setInt(4, pedido.getIdCliente());
             ps.setInt(5, pedido.getIdMesa());
 
             int filasAfectadas = ps.executeUpdate();
