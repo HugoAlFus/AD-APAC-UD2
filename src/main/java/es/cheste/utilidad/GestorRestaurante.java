@@ -45,7 +45,7 @@ public class GestorRestaurante {
                     break;
                 }
                 ejecutarSentenciaTabla(numTabla, sentencia);
-            }
+            } else ejecutarSentenciaCompleja();
         }
     }
 
@@ -77,6 +77,10 @@ public class GestorRestaurante {
             }
         } while (valor < min || valor > max);
         return valor;
+    }
+
+    private void ejecutarSentenciaCompleja(){
+
     }
 
     private void ejecutarSentenciaTabla(int numTabla, int numSentencia) {
@@ -343,7 +347,4 @@ public class GestorRestaurante {
         seSale = Boolean.TRUE;
         sc.close();
     }
-
-
-
 }
