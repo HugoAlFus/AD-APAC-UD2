@@ -103,7 +103,7 @@ public class ChefDAOImpl implements ChefDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAOException("Error al obtener todas los chefs.", e);
+            throw new DAOException("Error al obtener todas los chefs." + e.getMessage(), e);
         }
 
         return chefs;
@@ -182,8 +182,8 @@ public class ChefDAOImpl implements ChefDAO {
      */
     public Chef mappearChef(ResultSet rs) throws SQLException {
         int idChef = rs.getInt("ID_CHEF");
-        String nombreChef = rs.getNString("NOMBRE_CHEF");
-        EspecialidadChef especialidad = EspecialidadChef.valueOf(rs.getNString("ESPECIALIAD_CHEF").toUpperCase());
+        String nombreChef = rs.getString("NOMBRE_CHEF");
+        EspecialidadChef especialidad = EspecialidadChef.valueOf(rs.getString("ESPECIALIDAD_CHEF").toUpperCase());
         int experiencia = rs.getInt("EXPERIENCIA");
         String telefonoChef = rs.getString("TELEFONO_CHEF");
         boolean disponible = rs.getBoolean("DISPONIBLE");
