@@ -131,13 +131,16 @@ public class GestorBD {
 
         try (Statement statement = connection.createStatement()) {
             for (String tabla : TABLAS) {
-                ResultSet rs = statement.executeQuery(SentenciasSQL.getSentencia("obtener.todos." + tabla.toLowerCase()));
-                if (rs.next()) {
-                    hayTabla = Boolean.TRUE;
-                    return hayTabla;
+                String sql = SentenciasSQL.getSentencia("obtener.todos." + tabla.toLowerCase());
+                if (sql != null) {
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (rs.next()) {
+                        hayTabla = Boolean.TRUE;
+                    }
+                } else {
+                    LOGGER.error("La sentencia SQL para la tabla '{}' es null", tabla);
                 }
             }
-
         } catch (SQLException e) {
             LOGGER.error("Error al verificar la existencia de las tablas: {}", e.getMessage());
             return Boolean.FALSE;

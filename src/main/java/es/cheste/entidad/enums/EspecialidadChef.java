@@ -16,6 +16,7 @@ public enum EspecialidadChef {
     MARISCO,
     PANADERIA,
     VEGETARIANA,
-    VEGANA
+    VEGANA,
+    BRITÁNICA
 
 }
