@@ -1,6 +1,5 @@
 package es.cheste.utilidad;
 
-import es.cheste.entidad.*;
 import es.cheste.entidad.enums.*;
 import es.cheste.servicio.*;
 import org.slf4j.Logger;
@@ -245,7 +244,7 @@ public class GestorRestaurante {
                 sc.nextLine();
                 valor = -1;
             } catch (NoSuchElementException | IllegalArgumentException e) {
-                LOGGER.error("Error al obtener valor: {}", e.getMessage());
+                LOGGER.error("Error al obtener valor double: {}", e.getMessage());
                 return -1;
             }
         } while (valor < min);
