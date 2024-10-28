@@ -34,9 +34,9 @@ VALUES (1, 4, 'Terraza', 'Libre'),
        (4, 4, 'Ventana', 'Reservada');
 
 INSERT INTO public.PEDIDO (FECHA_PEDIDO, PRECIO_TOTAL, ID_CLIENTE, ID_MESA, ESTADO_PEDIDO)
-VALUES ('2023-10-01', 19.50, 1, 1, 'Pendiente'),
+VALUES ('2024-10-01', 19.50, 1, 1, 'Pendiente'),
        ('2023-10-02', 12.00, 2, 2, 'Entregado'),
-       ('2023-10-03', 25.50, 3, 3, 'Cancelado'),
+       ('2022-10-03', 25.50, 3, 3, 'Cancelado'),
        ('2023-10-04', 30.00, 4, 4, 'Preparacion');
 
 INSERT INTO public.CONTENER (ID_PEDIDO, ID_PLATO, CANTIDAD, SUBTOTAL)
