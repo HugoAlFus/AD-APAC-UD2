@@ -23,46 +23,6 @@ A continuación se describen las tablas con sus relaciones:
 
 ### 1. Plato
 
-* **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
-* **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
-
-### 2. Chef
-
-Descripción: Gestión de los chefs que trabajan en el restaurante.
-Atributos: ID, nombre, especialidad, experiencia, teléfono, disponibilidad.
-
-### 3. Cliente
-
-Descripción: Gestión de los clientes que realizan pedidos en el restaurante.
-Atributos: ID, nombre, teléfono, correo electrónico, dirección.
-
-### 4. Mesa
-
-Descripción: Gestión de las mesas disponibles en el restaurante.
-Atributos: ID, número, capacidad, ubicación, estado.
-
-### 5. Pedido
-
-Descripción: Gestión de los pedidos realizados por los clientes.
-Atributos: ID, fecha, precio total, cliente, mesa, estado.
-
-### 6. Contener
-Descripción: Relación entre los pedidos y los platos que contienen.
-Atributos: ID del pedido, ID del plato, cantidad, subtotal.
-
-### 7. Realizar
-Descripción: Relación entre los platos y los chefs que los preparan.
-Atributos: ID del plato, ID del chef, fecha.
-
-
-
-* * *
-
-## Explicacion del proyecto
-Es una aplicación diseñada para gestionar la información de un restaurante, que incluye platos, chefs, clientes, mesas, y pedidos.
-Sus componentes son los siguientes:
-### 1. Plato
-
 * **ID_PLATO**:Identificador único del plato (clave primaria).
 * **NOMBRE_PLATO**: Nombre del plato (único y no nulo).
 * **DESCRIPCION**: Descripción del plato (no nulo).
@@ -104,15 +64,115 @@ Sus componentes son los siguientes:
 * **ESTADO_PEDIDO**: Estado del pedido (no nulo).
 
 ### 6. Contener
+
 * **ID_PEDIDO**: Identificador del pedido (clave primaria y foránea).
 * **ID_PLATO**: Identificador del plato (clave primaria y foránea).
 * **CANTIDAD**: Cantidad del plato en el pedido (no nulo).
 * **SUBTOTAL**: Subtotal del plato en el pedido (no nulo).
 
 ### 7. Realizar
+
 * **ID_PLATO**: Identificador del plato (clave primaria y foránea).
 * **ID_CHEF**: Identificador del chef (clave primaria y foránea).
 * **FECHA**: Fecha en que el chef realizó el plato (no nulo).
+
+### Relaciones
+
+* **PLATO** se relaciona con **REALIZAR** y **CONTENER**.
+* **CHEF** se relaciona con **REALIZAR**.
+* **CLIENTE** se relaciona con **PEDIDO**.
+* **MESA** se relaciona con **PEDIDO**.
+* **PEDIDO** se relaciona con **CONTENER**.
+
+* * *
+
+## Explicacion del proyecto
+
+Es una aplicación diseñada para gestionar la información de un restaurante, que incluye platos, chefs, clientes, mesas,
+y pedidos.
+Sus componentes son los siguientes:
+
+### 1. Plato
+
+* **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
+* **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
+
+### 2. Chef
+
+* **Descripción**: Gestión de los chefs que trabajan en el restaurante.
+* **Atributos**: ID, nombre, especialidad, experiencia, teléfono, disponibilidad.
+
+### 3. Cliente
+
+* **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
+* **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
+
+### 4. Mesa
+
+* **Descripción**: Gestión de las mesas disponibles en el restaurante.
+* **Atributos**: ID, número, capacidad, ubicación, estado.
+
+### 5. Pedido
+
+* **Descripción**: Gestión de los pedidos realizados por los clientes.
+* **Atributos**: ID, fecha, precio total, cliente, mesa, estado.
+
+### 6. Contener
+
+* **Descripción**: Relación entre los pedidos y los platos que contienen.
+* **Atributos**: ID del pedido, ID del plato, cantidad, subtotal.
+
+### 7. Realizar
+
+* **Descripción**: Relación entre los platos y los chefs que los preparan.
+* **Atributos**: ID del plato, ID del chef, fecha.
+
+Además sus funcionalidades son las siguientes:
+
+### Funcionalidades Principales
+
+### 1. Gestión de Platos:
+
+* **Agregar Plato**: Permite añadir nuevos platos al menú del restaurante.
+* **Obtener Plato**: Permite consultar la información de un plato específico.
+* **Listar Platos**: Muestra una lista de todos los platos disponibles en el restaurante.
+* **Actualizar Plato**: Permite modificar la información de un plato existente.
+* **Eliminar Plato**: Permite eliminar un plato del menú.
+
+### 2. Gestión de Chefs:
+
+* **Agregar Chef**: Permite añadir nuevos chefs al restaurante.
+* **Obtener Chef**: Permite consultar la información de un chef específico.
+* **Listar Chefs**: Muestra una lista de todos los chefs que trabajan en el restaurante.
+* **Actualizar Chef**: Permite modificar la información de un chef existente.
+* **Eliminar Chef**: Permite eliminar un chef del restaurante.
+
+### 3. Gestión de Clientes:
+
+* **Agregar Cliente**: Permite registrar nuevos clientes en el sistema.
+* **Obtener Cliente**: Permite consultar la información de un cliente específico.
+* **Listar Clientes**: Muestra una lista de todos los clientes registrados.
+* **Actualizar Cliente**: Permite modificar la información de un cliente existente.
+* **Eliminar Cliente**: Permite eliminar un cliente del sistema.
+
+### 4. Gestión de Mesas:  
+
+* **Agregar Mesa**: Permite añadir nuevas mesas al restaurante.
+* **Obtener Mesa**: Permite consultar la información de una mesa específica.
+* **Listar Mesas**: Muestra una lista de todas las mesas disponibles en el restaurante.
+* **Actualizar Mesa**: Permite modificar la información de una mesa existente.
+* **Eliminar Mesa**: Permite eliminar una mesa del restaurante.
+
+### 5. Gestión de Pedidos:  
+* **Agregar Pedido**: Permite registrar nuevos pedidos realizados por los clientes.
+* **Obtener Pedido**: Permite consultar la información de un pedido específico.
+* **Listar Pedidos**: Muestra una lista de todos los pedidos realizados.
+* **Actualizar Pedido**: Permite modificar la información de un pedido existente.
+* **Eliminar Pedido**: Permite eliminar un pedido del sistema.
+
+### 6. Gestión de Relaciones:  
+* **Contener**: Relaciona los pedidos con los platos que contienen, incluyendo la cantidad y el subtotal.
+* **Realizar**: Relaciona los platos con los chefs que los preparan, incluyendo la fecha de preparación.
 
 * * *
 
