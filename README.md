@@ -1,3 +1,4 @@
+
 # Proyecto Restaurante
 
 * * *
@@ -15,8 +16,7 @@
 
 ## Explicación de la Base de Datos
 
-Esta base de datos es sobre un restaurante y está diseñada para gestionar información relacionada con platos, chefs,
-clientes, mesas, pedidos y las relaciones entre ellos.
+Esta base de datos es sobre un restaurante y está diseñada para gestionar información relacionada con platos, chefs, clientes, mesas, pedidos y las relaciones entre ellos.
 A continuación se describen las tablas con sus relaciones:
 
 ![Imagen del diagrama de la base de datos](src/main/resources/img/diagrama_BD.png "Diagrama")
@@ -182,26 +182,35 @@ Además sus funcionalidades son las siguientes:
 * ***Intellij IDEA***
 * ***Git y GitHub***
 
-<p>Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá</p>
+<p>Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá.</p>
 * * *
 
 ## Instrucciones de uso
-<p>Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.</p>
-<p>Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos, además las tablas y los datos se crearán en le schema *public* de la misma.</p>
-<p>Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.</p>
-<p>Una vez realizados estos pasos la aplicacion estaria totalmente disponible para el usuario.</p>
+Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.
+Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos, además las tablas y los datos se crearán en le schema *public* de la misma.
+Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
+Una vez realizados estos pasos la aplicación estaría totalmente disponible para el usuario.
+
 ### Pasos a seguir
-1. Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualemte al disponer nivel administrador estan todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de la aplicación.
-2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos, actualizar un dato e eliminar un dato. Si se eligio una consulta compuesta dará a elegir entre 2: una es calcular los gastos totlaes de los clientes y la otra es obtener con detalle los pedidos en un rango de fechas (introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
-3. Una vez ejecutada la sentencia volvera a la pantalla inicial, seleccion de tabla, y se poddra repetir este proceso hasta que el usuario quiera salir.
+
+1.  Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualmente al disponer nivel administrador están todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de la aplicación.
+2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos, actualizar un dato e eliminar un dato. Si se eligió una consulta compuesta dará a elegir entre 2: una es <u>calcular los gastos totales de los clientes</u> y la otra es <u>obtener con detalle los pedidos en un rango de fechas</u> (introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
+3. Una vez ejecutada la sentencia volverá a la pantalla inicial, selección de tabla, y se podrá repetir este proceso hasta que el usuario quiera salir.
 
 * * *
-
 ## Uso de PostgreSQL
-
+![Imagen PostgreSQL](https://btech.id/media/images/Page/2023/07/07/postgres-2583895412)
+Busque información sobre las *SGBD* que piden las empresas. Investigué sobre varios gestores y me decidí por ***PostgreSQL***.
+Lo que me hizo decantarme por este sistema gestor de base de datos fue:
+* Su instalación y su configuración son fáciles de hacer para cualquier usuario.
+* Su herramienta gráfica *PgAdmin* es muy sencilla e intuitiva, además que dispone de multitud de opciones, tanto interactuar con la misma base de datos como saber el porcentaje que esta consumiendo de nuestro dispositivo con la base de datos en marcha.
+* Además el lenguaje *SQL* que utiliza es el estándar, por lo tanto resulta sencillo hacer consultas y scripts.
+* Tiene una gran cantidad de extensiones que son compatibles con lenguajes de programación, como con java. También su implementación en  java es muy sencilla y está todo totalmente documentado de como se tiene que hacer.
 * * *
 
 ## Uso de Lombok
+Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases. 
+Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que impleme
 
 * * *
 ![Imagen Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
