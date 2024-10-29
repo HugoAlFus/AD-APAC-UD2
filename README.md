@@ -174,6 +174,8 @@ Además sus funcionalidades son las siguientes:
 * **Contener**: Relaciona los pedidos con los platos que contienen, incluyendo la cantidad y el subtotal.
 * **Realizar**: Relaciona los platos con los chefs que los preparan, incluyendo la fecha de preparación.
 
+### Tecnologías usadas
+
 * * *
 
 ## Instrucciones de uso
