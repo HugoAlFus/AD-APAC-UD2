@@ -23,6 +23,46 @@ A continuación se describen las tablas con sus relaciones:
 
 ### 1. Plato
 
+* **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
+* **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
+
+### 2. Chef
+
+Descripción: Gestión de los chefs que trabajan en el restaurante.
+Atributos: ID, nombre, especialidad, experiencia, teléfono, disponibilidad.
+
+### 3. Cliente
+
+Descripción: Gestión de los clientes que realizan pedidos en el restaurante.
+Atributos: ID, nombre, teléfono, correo electrónico, dirección.
+
+### 4. Mesa
+
+Descripción: Gestión de las mesas disponibles en el restaurante.
+Atributos: ID, número, capacidad, ubicación, estado.
+
+### 5. Pedido
+
+Descripción: Gestión de los pedidos realizados por los clientes.
+Atributos: ID, fecha, precio total, cliente, mesa, estado.
+
+### 6. Contener
+Descripción: Relación entre los pedidos y los platos que contienen.
+Atributos: ID del pedido, ID del plato, cantidad, subtotal.
+
+### 7. Realizar
+Descripción: Relación entre los platos y los chefs que los preparan.
+Atributos: ID del plato, ID del chef, fecha.
+
+
+
+* * *
+
+## Explicacion del proyecto
+Es una aplicación diseñada para gestionar la información de un restaurante, que incluye platos, chefs, clientes, mesas, y pedidos.
+Sus componentes son los siguientes:
+### 1. Plato
+
 * **ID_PLATO**:Identificador único del plato (clave primaria).
 * **NOMBRE_PLATO**: Nombre del plato (único y no nulo).
 * **DESCRIPCION**: Descripción del plato (no nulo).
@@ -73,16 +113,6 @@ A continuación se describen las tablas con sus relaciones:
 * **ID_PLATO**: Identificador del plato (clave primaria y foránea).
 * **ID_CHEF**: Identificador del chef (clave primaria y foránea).
 * **FECHA**: Fecha en que el chef realizó el plato (no nulo).
-
-### Relaciones
-* **PLATO** se relaciona con **REALIZAR** y **CONTENER**.
-* **CHEF** se relaciona con **REALIZAR**.
-* **CLIENTE** se relaciona con **PEDIDO**.
-* **MESA** se relaciona con **PEDIDO**.
-* **PEDIDO** se relaciona con **CONTENER**.
-* * *
-
-## Explicacion del proyecto
 
 * * *
 
