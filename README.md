@@ -1,4 +1,5 @@
 
+
 # Proyecto Restaurante
 
 * * *
@@ -210,13 +211,19 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 
 ## Uso de Lombok
 Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases. 
-Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que impleme
+Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*, *setters*, ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
+Además deja implementar el código que quieras sobre el código generado.
+![Imagen ejemplo lombok](https://www.arquitecturajava.com/wp-content/uploads/javasimplificacion.png)
+* * * 
+## Bibliografia
+* **PostgreSQL**: [Documentación PostgreSQL](https://www.postgresql.org/docs/)
+* **Lombok**: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)
 
-* * *
+***
+
 ![Imagen Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Windows 11](https://img.shields.io/badge/Windows%2011-%230079d5.svg?style=for-the-badge&logo=Windows%2011&logoColor=white)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
-
