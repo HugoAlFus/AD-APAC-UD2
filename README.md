@@ -183,7 +183,7 @@ Además sus funcionalidades son las siguientes:
 * ***Intellij IDEA***
 * ***Git y GitHub***
 
-<p>Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá.</p>
+Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá.
 * * *
 
 ## Instrucciones de uso
