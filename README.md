@@ -176,9 +176,24 @@ Además sus funcionalidades son las siguientes:
 
 ### Tecnologías usadas
 
+* ***Java***
+* ***PostgreSQL***
+* ***Lombok***
+* ***Intellij IDEA***
+* ***Git y GitHub***
+
+<p>Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá</p>
 * * *
 
 ## Instrucciones de uso
+<p>Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.</p>
+<p>Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos, además las tablas y los datos se crearán en le schema *public* de la misma.</p>
+<p>Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.</p>
+<p>Una vez realizados estos pasos la aplicacion estaria totalmente disponible para el usuario.</p>
+### Pasos a seguir
+1. Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualemte al disponer nivel administrador estan todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de la aplicación.
+2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos, actualizar un dato e eliminar un dato. Si se eligio una consulta compuesta dará a elegir entre 2: una es calcular los gastos totlaes de los clientes y la otra es obtener con detalle los pedidos en un rango de fechas (introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
+3. Una vez ejecutada la sentencia volvera a la pantalla inicial, seleccion de tabla, y se poddra repetir este proceso hasta que el usuario quiera salir.
 
 * * *
 
