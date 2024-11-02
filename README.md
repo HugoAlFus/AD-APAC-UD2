@@ -184,8 +184,14 @@ Además sus funcionalidades son las siguientes:
 * ***Intellij IDEA***
 * ***Git y GitHub***
 
-Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las
-operaciones. En futuras versiones se corregirá.
+### Listado mejoras para futuras versiones
+- [ ] Añadir nivel usuario y administrador.
+- [ ] Añadir validación de atributos a insertar, como por ejemplo en teléfono.
+- [ ] Añadir más consultas complejas.
+- [ ] Añadir <u>Select</u> con <u>Where</u> a elección. 
+
+Actualmente, la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las
+operaciones.
 * * *
 
 ## Instrucciones de uso
@@ -198,7 +204,7 @@ Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones 
 consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
 Una vez realizados estos pasos la aplicación estaría totalmente disponible para el usuario.
 Además se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si se
-quiere volver a empezar. Para ejecutarlo tan solo copielo en *PostgreSQL* o ejecutelo en el mismo IDE.
+quiere volver a empezar. Para ejecutarlo tan solo copielo en la consola de *PostgreSQL* o ejecutelo en el mismo IDE.
 No es obligatorio eliminarla base de datos al realizar cambios.
 
 ### Pasos a seguir
