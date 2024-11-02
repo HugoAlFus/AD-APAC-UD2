@@ -1,5 +1,3 @@
-
-
 # Proyecto Restaurante
 
 * * *
@@ -17,7 +15,8 @@
 
 ## Explicación de la Base de Datos
 
-Esta base de datos es sobre un restaurante y está diseñada para gestionar información relacionada con platos, chefs, clientes, mesas, pedidos y las relaciones entre ellos.
+Esta base de datos es sobre un restaurante y está diseñada para gestionar información relacionada con platos, chefs,
+clientes, mesas, pedidos y las relaciones entre ellos.
 A continuación se describen las tablas con sus relaciones:
 
 ![Imagen del diagrama de la base de datos](src/main/resources/img/diagrama_BD.png "Diagrama")
@@ -156,7 +155,7 @@ Además sus funcionalidades son las siguientes:
 * **Actualizar Cliente**: Permite modificar la información de un cliente existente.
 * **Eliminar Cliente**: Permite eliminar un cliente del sistema.
 
-### 4. Gestión de Mesas:  
+### 4. Gestión de Mesas:
 
 * **Agregar Mesa**: Permite añadir nuevas mesas al restaurante.
 * **Obtener Mesa**: Permite consultar la información de una mesa específica.
@@ -164,14 +163,16 @@ Además sus funcionalidades son las siguientes:
 * **Actualizar Mesa**: Permite modificar la información de una mesa existente.
 * **Eliminar Mesa**: Permite eliminar una mesa del restaurante.
 
-### 5. Gestión de Pedidos:  
+### 5. Gestión de Pedidos:
+
 * **Agregar Pedido**: Permite registrar nuevos pedidos realizados por los clientes.
 * **Obtener Pedido**: Permite consultar la información de un pedido específico.
 * **Listar Pedidos**: Muestra una lista de todos los pedidos realizados.
 * **Actualizar Pedido**: Permite modificar la información de un pedido existente.
 * **Eliminar Pedido**: Permite eliminar un pedido del sistema.
 
-### 6. Gestión de Relaciones:  
+### 6. Gestión de Relaciones:
+
 * **Contener**: Relaciona los pedidos con los platos que contienen, incluyendo la cantidad y el subtotal.
 * **Realizar**: Relaciona los platos con los chefs que los preparan, incluyendo la fecha de preparación.
 
@@ -183,44 +184,72 @@ Además sus funcionalidades son las siguientes:
 * ***Intellij IDEA***
 * ***Git y GitHub***
 
-Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las operaciones. En futuras versiones se corregirá.
+Actualmente la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las
+operaciones. En futuras versiones se corregirá.
 * * *
 
 ## Instrucciones de uso
-Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.
-Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos, además las tablas y los datos se crearán en le schema *public* de la misma.
-Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
+
+Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>
+applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.
+Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos,
+además las tablas y los datos se crearán en le schema *public* de la misma.
+Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la
+consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
 Una vez realizados estos pasos la aplicación estaría totalmente disponible para el usuario.
-Además se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si se quiere volver a empezar. Para ejecutarlo tan solo copielo en *PostgreSQL* o ejecutelo en el mismo IDE.
+Además se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si se
+quiere volver a empezar. Para ejecutarlo tan solo copielo en *PostgreSQL* o ejecutelo en el mismo IDE.
 No es obligatorio eliminarla base de datos al realizar cambios.
 
 ### Pasos a seguir
 
-1.  Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualmente al disponer nivel administrador están todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de la aplicación.
-2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos, actualizar un dato e eliminar un dato. Si se eligió una consulta compuesta dará a elegir entre 2: una es <u>calcular los gastos totales de los clientes</u> y la otra es <u>obtener con detalle los pedidos en un rango de fechas</u> (introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
-3. Una vez ejecutada la sentencia volverá a la pantalla inicial, selección de tabla, y se podrá repetir este proceso hasta que el usuario quiera salir.
+1. Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualmente al disponer nivel
+   administrador están todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de
+   la aplicación.
+2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos,
+   actualizar un dato e eliminar un dato. Si se eligió una consulta compuesta dará a elegir entre 2: una es <u>calcular
+   los gastos totales de los clientes</u> y la otra es <u>obtener con detalle los pedidos en un rango de fechas</u> (
+   introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
+3. Una vez ejecutada la sentencia volverá a la pantalla inicial, selección de tabla, y se podrá repetir este proceso
+   hasta que el usuario quiera salir.
 
 * * *
+
 ## Uso de PostgreSQL
+
 ![Imagen PostgreSQL](https://btech.id/media/images/Page/2023/07/07/postgres-2583895412)
-Busque información sobre las *SGBD* que piden las empresas. Investigué sobre varios gestores y me decidí por ***PostgreSQL***.
+Busque información sobre las *SGBD* que piden las empresas. Investigué sobre varios gestores y me decidí por
+***PostgreSQL***.
 Lo que me hizo decantarme por este sistema gestor de base de datos fue:
+
 * Su instalación y su configuración son fáciles de hacer para cualquier usuario.
-* Su herramienta gráfica *PgAdmin* es muy sencilla e intuitiva, además que dispone de multitud de opciones, tanto interactuar con la misma base de datos como saber el porcentaje que esta consumiendo de nuestro dispositivo con la base de datos en marcha.
+* Su herramienta gráfica *PgAdmin* es muy sencilla e intuitiva, además que dispone de multitud de opciones, tanto
+  interactuar con la misma base de datos como saber el porcentaje que esta consumiendo de nuestro dispositivo con la
+  base de datos en marcha.
 * Además el lenguaje *SQL* que utiliza es el estándar, por lo tanto resulta sencillo hacer consultas y scripts.
-* Tiene una gran cantidad de extensiones que son compatibles con lenguajes de programación, como con java. También su implementación en  java es muy sencilla y está todo totalmente documentado de como se tiene que hacer.
+* Tiene una gran cantidad de extensiones que son compatibles con lenguajes de programación, como con java. También su
+  implementación en java es muy sencilla y está todo totalmente documentado de como se tiene que hacer.
+
 * * *
 
 ## Uso de Lombok
-Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases. 
-Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*, *setters*, ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
+
+Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases.
+Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*,
+*setters*, ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una
+manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de
+la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
 Además deja implementar el código que quieras sobre el código generado.
-Aquí he añadido un ejemplo que me hizo decantarme por esta clase, además de explicar de forma clara como funciona esta clase.
+Aquí he añadido un ejemplo que me hizo decantarme por esta clase, además de explicar de forma clara como funciona esta
+clase.
 ![Imagen ejemplo lombok](src/main/resources/img/ejemplo_lombok.png)
 * * * 
+
 ## Bibliografia
+
 * **PostgreSQL**: [Documentación PostgreSQL](https://www.postgresql.org/docs/)
-* **Lombok**: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)
+* **Lombok
+  **: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)
 
 ***
 
