@@ -6,10 +6,20 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 
+/**
+ * Clase que contiene métodos para ejecutar sentencias SQL complejas.
+ *
+ * @author Hugo Almodóvar Fuster
+ * @version 1.0
+ */
 public class SentenciasComplejas {
 
     private static final Logger LOGGER = LogManager.getLogger(SentenciasComplejas.class);
 
+    /**
+     * Ejecuta la sentencia SQL para calcular el total de gastos por cliente.
+     * La sentencia se obtiene de la clase SentenciasSQL.
+     */
     public static void ejecutarCalcularTotalGasto() {
         try (Connection connection = new ConexionBD().getConnection();
              CallableStatement cs = connection.prepareCall(SentenciasSQL.getSentencia("calcular.total.gastos.cliente"))) {
@@ -33,6 +43,13 @@ public class SentenciasComplejas {
         }
     }
 
+    /**
+     * Ejecuta la sentencia SQL para mostrar los detalles de los pedidos en un rango de fechas.
+     * La sentencia se obtiene de la clase SentenciasSQL.
+     *
+     * @param fechaInicio La fecha de inicio del rango.
+     * @param fechaFin    La fecha de fin del rango.
+     */
     public static void ejecutarMostrarDetallesPedidos(LocalDate fechaInicio, LocalDate fechaFin) {
         try (Connection connection = new ConexionBD().getConnection();
              CallableStatement cs = connection.prepareCall(SentenciasSQL.getSentencia("mostrar.detalles.pedidos.fecha"))) {

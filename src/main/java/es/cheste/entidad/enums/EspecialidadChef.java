@@ -17,6 +17,6 @@ public enum EspecialidadChef {
     PANADERIA,
     VEGETARIANA,
     VEGANA,
-    BRITÁNICA
+    BRITANICA
 
 }

@@ -17,7 +17,7 @@ VALUES ('Ensalada César',
 
 INSERT INTO public.CHEF (NOMBRE_CHEF, ESPECIALIDAD_CHEF, EXPERIENCIA, TELEFONO_CHEF, DISPONIBLE)
 VALUES ('Gordon Ramsay', 'Italiana', 20, '123456789', TRUE),
-       ('Jamie Oliver', 'Británica', 15, '987654321', TRUE),
+       ('Jamie Oliver', 'Britanica', 15, '987654321', TRUE),
        ('Heston Blumenthal', 'Japonesa', 25, '123123123', TRUE),
        ('Massimo Bottura', 'Italiana', 30, '321321321', FALSE);
 
