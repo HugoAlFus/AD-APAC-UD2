@@ -127,7 +127,7 @@ Sus componentes son los siguientes:
 * **Descripción**: Relación entre los platos y los chefs que los preparan.
 * **Atributos**: ID del plato, ID del chef, fecha.
 
-Además sus funcionalidades son las siguientes:
+Además, sus funcionalidades son las siguientes:
 
 ### Funcionalidades Principales
 
@@ -208,7 +208,8 @@ además las tablas y los datos se crearán en le schema *public* de la misma.
 Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la
 consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
 Una vez realizados estos pasos la aplicación estaría totalmente disponible para el usuario.
-Además se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si se
+Además, se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si
+se
 quiere volver a empezar. Para ejecutarlo tan solo copielo en la consola de *PostgreSQL* o ejecutelo en el mismo IDE.
 No es obligatorio eliminarla base de datos al realizar cambios.
 
@@ -218,9 +219,11 @@ No es obligatorio eliminarla base de datos al realizar cambios.
    administrador están todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de
    la aplicación.
 2. Al elegir una tabla se podrá insertar un dato, obtener un dato por su identificador, obtener todos los datos,
-   actualizar un dato e eliminar un dato. Si se eligió una consulta compuesta dará a elegir entre 2: una es <u>calcular
-   los gastos totales de los clientes</u> y la otra es <u>obtener con detalle los pedidos en un rango de fechas</u> (
-   introducidas por el usuario). Además se podrá salir para ir de nuevo al menú para elegir tabla.
+   actualizar un dato y eliminar un dato. Si se eligió una consulta compuesta dará a elegir entre 2: una es <u>
+   calcular
+   los gastos totales de los clientes</u> y la otra es <u>obtener con detalle los pedidos en un rango de fechas</u>(
+   introducidas por el usuario).
+   Además, se podrá salir para ir de nuevo al menú para elegir tabla.
 3. Una vez ejecutada la sentencia volverá a la pantalla inicial, selección de tabla, y se podrá repetir este proceso
    hasta que el usuario quiera salir.
 
@@ -235,9 +238,9 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 
 * Su instalación y su configuración son fáciles de hacer para cualquier usuario.
 * Su herramienta gráfica *PgAdmin* es muy sencilla e intuitiva, además que dispone de multitud de opciones, tanto
-  interactuar con la misma base de datos como saber el porcentaje que esta consumiendo de nuestro dispositivo con la
+  interactuar con la misma base de datos como saber el porcentaje que está consumiendo de nuestro dispositivo con la
   base de datos en marcha.
-* Además el lenguaje *SQL* que utiliza es el estándar, por lo tanto resulta sencillo hacer consultas y scripts.
+* Además, el lenguaje *SQL* que utiliza es el estándar, por lo tanto, resulta sencillo hacer consultas y scripts.
 * Tiene una gran cantidad de extensiones que son compatibles con lenguajes de programación, como con java. También su
   implementación en java es muy sencilla y está todo totalmente documentado de como se tiene que hacer.
 
@@ -247,10 +250,12 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 
 Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases.
 Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*,
-*setters*, *ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una
-manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de
+*setters*, *ToString* y *EqualsAndHashCode*, y, por lo tanto, tienes a tu disposición todos los métodos esenciales de
+una
+manera muy sencilla. Además, uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos
+de
 la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
-Además deja implementar el código que quieras sobre el código generado.
+Además, deja implementar el código que quieras sobre el código generado.
 Aquí he añadido un ejemplo que me hizo decantarme por esta clase, además de explicar de forma clara como funciona esta
 clase.
 
