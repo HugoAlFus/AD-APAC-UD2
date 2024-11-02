@@ -46,11 +46,10 @@ public class GestorBD {
                 ejecutarSentenciasSQL(RUTA_SQL_CREACION, connection);
                 ejecutarSentenciasSQL(RUTA_SQL_INSERCION, connection);
                 connection.commit();
-                esValida = Boolean.TRUE;
             } else {
                 LOGGER.info("Las tablas ya existen");
-                esValida = Boolean.TRUE;
             }
+            esValida = Boolean.TRUE;
         } catch (SQLException e) {
             LOGGER.error("Error al iniciar la base de datos: {}", e.getMessage());
             try {
@@ -127,24 +126,27 @@ public class GestorBD {
      * @return true si todas las tablas existen, false en caso contrario.
      */
     private static boolean comprobarExistenTablas(Connection connection) {
-        boolean hayTabla = Boolean.FALSE;
+        boolean todasTablasExisten = Boolean.TRUE;
 
         try (Statement statement = connection.createStatement()) {
             for (String tabla : TABLAS) {
                 String sql = SentenciasSQL.getSentencia("obtener.todos." + tabla.toLowerCase());
                 if (sql != null) {
-                    ResultSet rs = statement.executeQuery(sql);
-                    if (rs.next()) {
-                        hayTabla = Boolean.TRUE;
+                    try (ResultSet rs = statement.executeQuery(sql)) {
+                        if (!rs.next()) {
+                            todasTablasExisten = Boolean.FALSE;
+                            break;
+                        }
                     }
                 } else {
-                    LOGGER.error("La sentencia SQL para la tabla '{}' es null", tabla);
+                    todasTablasExisten = Boolean.FALSE;
+                    break;
                 }
             }
         } catch (SQLException e) {
             LOGGER.error("Error al verificar la existencia de las tablas: {}", e.getMessage());
             return Boolean.FALSE;
         }
-        return hayTabla;
+        return todasTablasExisten;
     }
 }

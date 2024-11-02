@@ -191,6 +191,8 @@ Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado co
 Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos, además las tablas y los datos se crearán en le schema *public* de la misma.
 Si se quiere hacer uso de las funciones complejas se ha de copiar las funciones del fichero <u>procedures.sql</u> en la consola de *PgAdmin4* y ejecutarlas de forma solitaria para almacenarlas en la base de datos.
 Una vez realizados estos pasos la aplicación estaría totalmente disponible para el usuario.
+Además se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si se quiere volver a empezar. Para ejecutarlo tan solo copielo en *PostgreSQL* o ejecutelo en el mismo IDE.
+No es obligatorio eliminarla base de datos al realizar cambios.
 
 ### Pasos a seguir
 
@@ -213,7 +215,8 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases. 
 Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*, *setters*, ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
 Además deja implementar el código que quieras sobre el código generado.
-![Imagen ejemplo lombok](https://www.arquitecturajava.com/wp-content/uploads/javasimplificacion.png)
+Aquí he añadido un ejemplo que me hizo decantarme por esta clase, además de explicar de forma clara como funciona esta clase.
+![Imagen ejemplo lombok](src/main/resources/img/ejemplo_lombok.png)
 * * * 
 ## Bibliografia
 * **PostgreSQL**: [Documentación PostgreSQL](https://www.postgresql.org/docs/)
