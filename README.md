@@ -185,18 +185,23 @@ Además sus funcionalidades son las siguientes:
 * ***Git y GitHub***
 
 ### Listado mejoras para futuras versiones
+
 - [ ] Añadir nivel usuario y administrador.
 - [ ] Añadir validación de atributos a insertar, como por ejemplo en teléfono.
 - [ ] Añadir más consultas complejas.
-- [ ] Añadir <u>Select</u> con <u>Where</u> a elección. 
+- [ ] Añadir **Select** con **Where** a elección.
 
 Actualmente, la aplicación solo está para nivel administrador, es decir, se tiene acceso a todos los datos y todas las
 operaciones.
+En las clases **SentenciasSQL.java** y **Mensajes.java** se utiliza un bloque *static*, que sirve para que en este
+caso se carguen todos los mensajes y sentencias del properties las clases. Esto se hace automáticamente al compilar las
+clases. Además, se hace un *throws* en este bloque para que si ha habido un error no se siga ejecutando el programa y se
+intente de nuevo.
 * * *
 
 ## Instrucciones de uso
 
-Asegurarse de tener instalado  **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>
+Asegurarse de tener instalado **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>
 applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.
 Una vez configurado se recomienda crear una base de datos llamada *Restaurante* para realizar los cambios mínimos,
 además las tablas y los datos se crearán en le schema *public* de la misma.
@@ -248,14 +253,14 @@ la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
 Además deja implementar el código que quieras sobre el código generado.
 Aquí he añadido un ejemplo que me hizo decantarme por esta clase, además de explicar de forma clara como funciona esta
 clase.
+
 ![Imagen ejemplo lombok](src/main/resources/img/ejemplo_lombok.png)
 * * * 
 
 ## Bibliografia
 
 * **PostgreSQL**: [Documentación PostgreSQL](https://www.postgresql.org/docs/)
-* **Lombok
-  **: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)
+* **Lombok**: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)
 
 ***
 

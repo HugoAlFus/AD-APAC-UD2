@@ -23,7 +23,7 @@ public class Mensajes {
     private static final Logger LOGGER = LogManager.getLogger(Mensajes.class);
 
     /**
-     * Bloque estático para cargar los mensajes al cargarse en memoria.
+     * Bloque estático para cargar los mensajes al compilarse la aplicación.
      */
     static {
         try (FileInputStream fis = new FileInputStream(new File(RUTA_MENSAJES))) {

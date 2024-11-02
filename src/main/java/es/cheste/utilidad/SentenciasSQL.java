@@ -23,7 +23,7 @@ public class SentenciasSQL {
     private static final Logger LOGGER = LogManager.getLogger(SentenciasSQL.class);
 
     /**
-     * Bloque estático para cargar las sentencias SQL al cargarse en memoria.
+     * Bloque estático para cargar las sentencias SQL al compilarse la aplicación.
      */
     static {
         try (FileInputStream fis = new FileInputStream(new File(RUTA_SENTENCIAS_SQL))) {
