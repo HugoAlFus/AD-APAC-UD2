@@ -236,7 +236,7 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 
 Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases.
 Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*,
-*setters*, ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una
+*setters*, *ToString* y *EqualsAndHashCode*, y por lo tanto tienes a tu disposición todos los métodos esenciales de una
 manera muy sencilla. Además uso la anotación *@AllArgsConstructor*, que genera un constructor con todos los atributos de
 la clase y *@NoArgsConstructor* que genera un constructor completamente vacío.
 Además deja implementar el código que quieras sobre el código generado.
