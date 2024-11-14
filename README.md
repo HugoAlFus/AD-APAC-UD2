@@ -1,8 +1,10 @@
-# Proyecto Restaurante
+<p align="center">
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&center=true&vCenter=true&width=442&height=55&lines=Proyecto+Restaurante;APAC+UD2;Hugo+Almod%C3%B3var+Fuster" alt="Typing SVG" /></a>
+</p>
 
 * * *
 
-## Índice
+## ☝️Índice
 
 1. [Explicación de la Base de Datos](#explicación-de-la-base-de-datos)
 2. [Explicación del proyecto](#explicacion-del-proyecto)
@@ -13,7 +15,7 @@
 
 * * *
 
-## Explicación de la Base de Datos
+## 🛢️Explicación de la Base de Datos
 
 Esta base de datos es sobre un restaurante y está diseñada para gestionar información relacionada con platos, chefs,
 clientes, mesas, pedidos y las relaciones entre ellos.
@@ -21,7 +23,7 @@ A continuación se describen las tablas con sus relaciones:
 
 ![Imagen del diagrama de la base de datos](src/main/resources/img/diagrama_BD.png "Diagrama")
 
-### 1. Plato
+### 1.🍽️Plato
 
 * **ID_PLATO**:Identificador único del plato (clave primaria).
 * **NOMBRE_PLATO**: Nombre del plato (único y no nulo).
@@ -29,7 +31,7 @@ A continuación se describen las tablas con sus relaciones:
 * **PRECIO_PLATO**: Precio del plato (no nulo).
 * **CATEGORIA_PLATO**: Categoría del plato (no nulo).
 
-### 2. Chef
+### 2.👨‍🍳Chef
 
 * **ID_CHEF**:Identificador único del chef (clave primaria).
 * **NOMBRE_CHEF**: Nombre del chef (no nulo).
@@ -38,7 +40,7 @@ A continuación se describen las tablas con sus relaciones:
 * **TELEFONO_CHEF**: Teléfono del chef (único y no nulo).
 * **DISPONIBLE**: Disponibilidad del chef (no nulo).
 
-### 3. Cliente
+### 3.🙋🏻‍♂️Cliente
 
 * **ID_CLIENTE**: Identificador único del cliente (clave primaria).
 * **NOMBRE_CLIENTE**: Nombre del cliente (no nulo).
@@ -46,7 +48,7 @@ A continuación se describen las tablas con sus relaciones:
 * **CORREO_ELECTRONICO**: Correo electrónico del cliente (único y no nulo).
 * **DIRECCION**: Dirección del cliente (no nulo).
 
-### 4. Mesa
+### 4.🪑Mesa
 
 * **ID_MESA**: Identificador único de la mesa (clave primaria).
 * **NUMERO_MESA**: Número de la mesa (único y no nulo).
@@ -54,7 +56,7 @@ A continuación se describen las tablas con sus relaciones:
 * **UBICACION_MESA**: Ubicación de la mesa (no nulo).
 * **ESTADO_MESA**: Estado de la mesa (no nulo).
 
-### 5. Pedido
+### 5.✍️Pedido
 
 * **ID_PEDIDO**: Identificador único del pedido (clave primaria).
 * **FECHA_PEDIDO**: Fecha del pedido (no nulo).
@@ -63,20 +65,20 @@ A continuación se describen las tablas con sus relaciones:
 * **ID_MESA**: Identificador de la mesa asociada al pedido (clave foránea).
 * **ESTADO_PEDIDO**: Estado del pedido (no nulo).
 
-### 6. Contener
+### 6.📦Contener
 
 * **ID_PEDIDO**: Identificador del pedido (clave primaria y foránea).
 * **ID_PLATO**: Identificador del plato (clave primaria y foránea).
 * **CANTIDAD**: Cantidad del plato en el pedido (no nulo).
 * **SUBTOTAL**: Subtotal del plato en el pedido (no nulo).
 
-### 7. Realizar
+### 7.🥣Realizar
 
 * **ID_PLATO**: Identificador del plato (clave primaria y foránea).
 * **ID_CHEF**: Identificador del chef (clave primaria y foránea).
 * **FECHA**: Fecha en que el chef realizó el plato (no nulo).
 
-### Relaciones
+### 🤝Relaciones
 
 * **PLATO** se relaciona con **REALIZAR** y **CONTENER**.
 * **CHEF** se relaciona con **REALIZAR**.
@@ -86,52 +88,52 @@ A continuación se describen las tablas con sus relaciones:
 
 * * *
 
-## Explicacion del proyecto
+## 📋Explicacion del proyecto
 
 Es una aplicación diseñada para gestionar la información de un restaurante, que incluye platos, chefs, clientes, mesas,
 y pedidos.
 Sus componentes son los siguientes:
 
-### 1. Plato
+### 1.🍽️Plato
 
 * **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
 * **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
 
-### 2. Chef
+### 2.👨‍🍳Chef
 
 * **Descripción**: Gestión de los chefs que trabajan en el restaurante.
 * **Atributos**: ID, nombre, especialidad, experiencia, teléfono, disponibilidad.
 
-### 3. Cliente
+### 3.🙋🏻‍♂️Cliente
 
 * **Descripción**: Gestión de los clientes que realizan pedidos en el restaurante.
 * **Atributos**: ID, nombre, teléfono, correo electrónico, dirección.
 
-### 4. Mesa
+### 4.🪑Mesa
 
 * **Descripción**: Gestión de las mesas disponibles en el restaurante.
 * **Atributos**: ID, número, capacidad, ubicación, estado.
 
-### 5. Pedido
+### 5.✍️Pedido
 
 * **Descripción**: Gestión de los pedidos realizados por los clientes.
 * **Atributos**: ID, fecha, precio total, cliente, mesa, estado.
 
-### 6. Contener
+### 6.📦Contener
 
 * **Descripción**: Relación entre los pedidos y los platos que contienen.
 * **Atributos**: ID del pedido, ID del plato, cantidad, subtotal.
 
-### 7. Realizar
+### 7.🥣Realizar
 
 * **Descripción**: Relación entre los platos y los chefs que los preparan.
 * **Atributos**: ID del plato, ID del chef, fecha.
 
 Además, sus funcionalidades son las siguientes:
 
-### Funcionalidades Principales
+### 🔁Funcionalidades Principales
 
-### 1. Gestión de Platos:
+### 1.🍽️Gestión de Platos:
 
 * **Agregar Plato**: Permite añadir nuevos platos al menú del restaurante.
 * **Obtener Plato**: Permite consultar la información de un plato específico.
@@ -139,7 +141,7 @@ Además, sus funcionalidades son las siguientes:
 * **Actualizar Plato**: Permite modificar la información de un plato existente.
 * **Eliminar Plato**: Permite eliminar un plato del menú.
 
-### 2. Gestión de Chefs:
+### 2.👨‍🍳Gestión de Chefs:
 
 * **Agregar Chef**: Permite añadir nuevos chefs al restaurante.
 * **Obtener Chef**: Permite consultar la información de un chef específico.
@@ -147,7 +149,7 @@ Además, sus funcionalidades son las siguientes:
 * **Actualizar Chef**: Permite modificar la información de un chef existente.
 * **Eliminar Chef**: Permite eliminar un chef del restaurante.
 
-### 3. Gestión de Clientes:
+### 3.🙋🏻‍♂️Gestión de Clientes:
 
 * **Agregar Cliente**: Permite registrar nuevos clientes en el sistema.
 * **Obtener Cliente**: Permite consultar la información de un cliente específico.
@@ -155,7 +157,7 @@ Además, sus funcionalidades son las siguientes:
 * **Actualizar Cliente**: Permite modificar la información de un cliente existente.
 * **Eliminar Cliente**: Permite eliminar un cliente del sistema.
 
-### 4. Gestión de Mesas:
+### 4.🪑Gestión de Mesas:
 
 * **Agregar Mesa**: Permite añadir nuevas mesas al restaurante.
 * **Obtener Mesa**: Permite consultar la información de una mesa específica.
@@ -163,7 +165,7 @@ Además, sus funcionalidades son las siguientes:
 * **Actualizar Mesa**: Permite modificar la información de una mesa existente.
 * **Eliminar Mesa**: Permite eliminar una mesa del restaurante.
 
-### 5. Gestión de Pedidos:
+### 5.✍️Gestión de Pedidos:
 
 * **Agregar Pedido**: Permite registrar nuevos pedidos realizados por los clientes.
 * **Obtener Pedido**: Permite consultar la información de un pedido específico.
@@ -171,12 +173,12 @@ Además, sus funcionalidades son las siguientes:
 * **Actualizar Pedido**: Permite modificar la información de un pedido existente.
 * **Eliminar Pedido**: Permite eliminar un pedido del sistema.
 
-### 6. Gestión de Relaciones:
+### 6.🤝Gestión de Relaciones:
 
 * **Contener**: Relaciona los pedidos con los platos que contienen, incluyendo la cantidad y el subtotal.
 * **Realizar**: Relaciona los platos con los chefs que los preparan, incluyendo la fecha de preparación.
 
-### Tecnologías usadas
+### 💻Tecnologías usadas
 
 * ***Java***
 * ***PostgreSQL***
@@ -184,7 +186,7 @@ Además, sus funcionalidades son las siguientes:
 * ***Intellij IDEA***
 * ***Git y GitHub***
 
-### Listado mejoras para futuras versiones
+### 📜Listado mejoras para futuras versiones
 
 - [ ] Añadir nivel usuario y administrador.
 - [ ] Añadir validación de atributos a insertar, como por ejemplo en teléfono.
@@ -199,7 +201,7 @@ clases. Además, se hace un *throws* en este bloque para que si ha habido un err
 intente de nuevo.
 * * *
 
-## Instrucciones de uso
+## ⚙️Instrucciones de uso
 
 Asegurarse de tener instalado **PostgreSQL**, además de tenerlo configurado correctamente como dice el fichero <u>
 applications.properties</u>, añadir el puerto correctamente y el *LocalHost*.
@@ -211,9 +213,8 @@ Una vez realizados estos pasos la aplicación estaría totalmente disponible par
 Además, se dispone de un fichero slq <u>borrar_tablas.sql</u> que elimina todas las tablas de la base de datos, por si
 se
 quiere volver a empezar. Para ejecutarlo tan solo copielo en la consola de *PostgreSQL* o ejecutelo en el mismo IDE.
-No es obligatorio eliminarla base de datos al realizar cambios.
 
-### Pasos a seguir
+### 👣Pasos a seguir
 
 1. Al iniciar la aplicación se pedirá al usuario que elija una de las tablas, actualmente al disponer nivel
    administrador están todas, con las que quiere trabajar o si quiere ejecutar una consulta compleja o se podrá salir de
@@ -226,10 +227,11 @@ No es obligatorio eliminarla base de datos al realizar cambios.
    Además, se podrá salir para ir de nuevo al menú para elegir tabla.
 3. Una vez ejecutada la sentencia volverá a la pantalla inicial, selección de tabla, y se podrá repetir este proceso
    hasta que el usuario quiera salir.
+4. En el caso que se salga definitivamente del programa, se tendrá la opción de eliminar todos los datos.
 
 * * *
 
-## Uso de PostgreSQL
+## 🐘Uso de PostgreSQL
 
 ![Imagen PostgreSQL](https://btech.id/media/images/Page/2023/07/07/postgres-2583895412)
 Busque información sobre las *SGBD* que piden las empresas. Investigué sobre varios gestores y me decidí por
@@ -246,7 +248,7 @@ Lo que me hizo decantarme por este sistema gestor de base de datos fue:
 
 * * *
 
-## Uso de Lombok
+## 📚Uso de Lombok
 
 Me estuve informando del uso de la librería ***Lombok*** y su utilidad es simplificar las clases.
 Se utiliza una anotación específica que implementa la librería. En mi caso utilizo *@Data*, que implementa *getter*,
@@ -262,7 +264,7 @@ clase.
 ![Imagen ejemplo lombok](src/main/resources/img/ejemplo_lombok.png)
 * * * 
 
-## Bibliografia
+## 📗Bibliografia
 
 * **PostgreSQL**: [Documentación PostgreSQL](https://www.postgresql.org/docs/)
 * **Lombok**: [Documentación oficial Lombok](https://projectlombok.org) - [Web ArquitecturaJava](https://www.arquitecturajava.com/java-lombok-clases-y-productividad/) - [OpenWebinars](https://openwebinars.net/blog/que-es-lombok/)

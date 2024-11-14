@@ -47,7 +47,7 @@ public class GestorRestaurante {
      */
     public void iniciarGestorRestaurante() {
         if (!estaIniciado) {
-            System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
+            System.err.println(obtenerTexto("iniciar.salida.error"));
             return;
         }
         while (!seSale) {
@@ -65,6 +65,7 @@ public class GestorRestaurante {
                 ejecutarSentenciaTabla(numTabla, sentencia);
             } else ejecutarSentenciaCompleja();
         }
+
     }
 
     /**
@@ -448,22 +449,6 @@ public class GestorRestaurante {
     }
 
     /**
-     * Método para obtener un texto a partir de un mensaje.
-     *
-     * @param mensaje el mensaje a mostrar al usuario.
-     * @return el texto obtenido.
-     */
-    private String obtenerTexto(String mensaje) {
-        try {
-            System.out.println(Mensajes.getMensaje(mensaje));
-            return sc.nextLine();
-        } catch (NoSuchElementException | IllegalArgumentException e) {
-            LOGGER.error("Error al obtener texto: {}", e.getMessage());
-            return null;
-        }
-    }
-
-    /**
      * Método para obtener la especialidad de un chef.
      *
      * @return la especialidad del chef.
@@ -564,6 +549,10 @@ public class GestorRestaurante {
             try {
                 System.out.println(Mensajes.getMensaje("insertar.disponibilidad.chef"));
                 respuesta = sc.next().toLowerCase().charAt(0);
+
+                if (respuesta != 's' && respuesta != 'n') {
+                    System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                }
             } catch (NoSuchElementException | IllegalArgumentException e) {
                 LOGGER.error("Error al obtener disponibilidad: {}", e.getMessage());
                 return Boolean.FALSE;
@@ -574,16 +563,72 @@ public class GestorRestaurante {
 
     /**
      * Método para mostrar un mensaje de salida.
+     * <p>
+     * Este método muestra un mensaje de salida dependiendo de la opción seleccionada.
+     * Si la opción es 9, se procede a eliminar los datos de la base de datos.
+     * Finalmente, se establece el estado de salida a verdadero y se cierra el escáner.
      *
      * @param opcion la opción seleccionada.
      */
     private void mostrarMensajeSalida(int opcion) {
         if (opcion == 9 || opcion == 6 || opcion == 3) {
             System.out.println(Mensajes.getMensaje("iniciar.salida.exitosa"));
+
+            if (opcion == 9) {
+                eliminarDatosBD();
+            }
+
         } else {
             System.err.println(Mensajes.getMensaje("iniciar.salida.error"));
         }
         seSale = Boolean.TRUE;
         sc.close();
+    }
+
+    /**
+     * Método para eliminar todos los datos de la base de datos.
+     * <p>
+     * Este método solicita confirmación al usuario antes de proceder a eliminar todos los datos de la base de datos.
+     * Si el usuario confirma, se llama al método `borrarBaseDatos` de la clase `GestorBD`.
+     */
+    private void eliminarDatosBD() {
+        char respuesta;
+
+        do {
+            try {
+                System.out.println(Mensajes.getMensaje("eliminar.datos.completo"));
+                respuesta = sc.next().toLowerCase().charAt(0);
+
+                if (respuesta != 's' && respuesta != 'n') {
+                    System.out.println(Mensajes.getMensaje("error.valor.valido"));
+                }
+
+            } catch (NoSuchElementException | IllegalArgumentException e) {
+                LOGGER.error("Error al introducir si se quiere borrar todos los datos: {}", e.getMessage());
+                respuesta = ' ';
+            }
+        } while (respuesta != 's' && respuesta != 'n');
+
+        if (respuesta == 's') {
+            boolean exito = GestorBD.borrarBaseDatos();
+            System.out.println(Mensajes.getMensaje(exito ? "eliminar.datos.completo.exito" : "iniciar.salida.error"));
+        } else
+            System.out.println(Mensajes.getMensaje("eliminar.datos.no.exito"));
+    }
+
+    /**
+     * Método para obtener un texto a partir de un mensaje.
+     *
+     * @param mensaje el mensaje a mostrar al usuario.
+     * @return el texto obtenido.
+     */
+    private String obtenerTexto(String mensaje) {
+        try {
+            System.out.println(Mensajes.getMensaje(mensaje));
+            return sc.nextLine();
+        } catch (NoSuchElementException | IllegalArgumentException e) {
+            LOGGER.error("Error al obtener texto: {}", e.getMessage());
+            return null;
+        }
     }
 }

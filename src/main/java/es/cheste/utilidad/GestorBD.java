@@ -23,6 +23,7 @@ public class GestorBD {
 
     private static final String RUTA_SQL_CREACION = "src/main/resources/sql/crear_tablas.sql";
     private static final String RUTA_SQL_INSERCION = "src/main/resources/sql/insertar_datos.sql";
+    private static final String RUTA_SQL_BORRADO = "src/main/resources/sql/borrar_tablas.sql";
     private static final String[] TABLAS = {"PLATO", "CHEF", "CLIENTE", "MESA", "PEDIDO", "CONTENER", "REALIZAR"};
     private static final Logger LOGGER = LogManager.getLogger(GestorBD.class);
 
@@ -34,7 +35,7 @@ public class GestorBD {
     public static boolean iniciarBaseDatos() {
         ConexionBD conexion = new ConexionBD();
         Connection connection = conexion.getConnection();
-        Boolean esValida = Boolean.FALSE;
+        boolean esValida = Boolean.FALSE;
         if (connection == null) {
             LOGGER.error("No se pudo establecer la conexión con la base de datos.");
             return esValida;
@@ -59,6 +60,32 @@ public class GestorBD {
                 LOGGER.error("Hubo un error al hacer rollback {}", e.getMessage());
             }
         } finally {
+            conexion.desconectar();
+        }
+        return esValida;
+    }
+
+    /**
+     * Borra la base de datos. Comprueba si las tablas existen y, si es así, ejecuta el script de borrado.
+     *
+     * @return true si la base de datos se borró correctamente, false en caso contrario.
+     */
+    public static boolean borrarBaseDatos(){
+        ConexionBD conexion = new ConexionBD();
+        Connection connection = conexion.getConnection();
+        boolean esValida = Boolean.FALSE;
+        if (connection == null) {
+            LOGGER.error("No se pudo establecer la conexión con la base de datos.");
+            return esValida;
+        }
+        try {
+            if(comprobarExistenTablas(connection)) {
+                ejecutarSentenciasSQL(RUTA_SQL_BORRADO, connection);
+                esValida = Boolean.TRUE;
+            }
+        }catch (SQLException e){
+            LOGGER.error("Error al eliminar los datos de la base de datos: {}",e.getMessage());
+        }finally {
             conexion.desconectar();
         }
         return esValida;
