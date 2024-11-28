@@ -285,7 +285,7 @@ public class GestorRestaurante {
      * @return el ID obtenido.
      */
     private int obtenerID(String tabla) {
-        return obtenerValor("insertar.ID" + tabla, 0);
+        return obtenerValor("insertar.ID."+tabla.toLowerCase(), 0);
     }
 
     /**
